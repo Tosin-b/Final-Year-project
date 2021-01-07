@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class NewBehaviourScript: MonoBehaviour
 {
 
-    // Start is called before the first frame update
-    void Start()
+    public float Jumpforce = 1;
+    public float MoveMentSpeed = 1.0f;
+    private Rigidbody2D rigidbody;
+    private void Start()
     {
-     
+        rigidbody = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-       // float vertical = Input.GetAxis("Vertical");
+        var movement = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
 
-        Vector2 position = transform.position;
-        position.x = position.x + 0.1f * horizontal;
-        //position.y = position.y + 0.1f * vertical;
-        transform.position = position;
+        if (Input.GetButtonDown("Jump") && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
+        {
+            Debug.Log("testing");
+            rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
+        }
     }
 }
