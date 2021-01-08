@@ -863,6 +863,7 @@ GameObject:
   - component: {fileID: 489900847}
   - component: {fileID: 489900848}
   - component: {fileID: 489900850}
+  - component: {fileID: 489900849}
   m_Layer: 0
   m_Name: player-idle-1
   m_TagString: Untagged
@@ -928,7 +929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489900844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.54, y: 1.28, z: 0}
+  m_LocalPosition: {x: -9.65, y: 1.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 808734241}
@@ -983,6 +984,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2114606, y: 2.397864}
   m_EdgeRadius: 0
+--- !u!95 &489900849
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489900844}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b834c7fa6c61e7d4c85b4cfe8e3ff99c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &489900850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,6 +1017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Jumpforce: 10
   MoveMentSpeed: 5
+  animator: {fileID: 489900849}
 --- !u!1 &521381616
 GameObject:
   m_ObjectHideFlags: 0
