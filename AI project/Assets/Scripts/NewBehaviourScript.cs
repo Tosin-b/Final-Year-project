@@ -8,6 +8,7 @@ public class NewBehaviourScript: MonoBehaviour
     public float Jumpforce = 1;
     public float MoveMentSpeed = 1.0f;
     private Rigidbody2D rigidbody;
+    bool crouch = false;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -16,11 +17,24 @@ public class NewBehaviourScript: MonoBehaviour
     {
         var movement = Input.GetAxis("Horizontal");
         transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
+        //transform.localScale = new Vector2(-1, 1);
 
         if (Input.GetButtonDown("Jump") && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
         {
             Debug.Log("testing");
             rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
         }
+
+        Vector3 characterscale = transform.localScale;
+        if(Input.GetAxis("Horizontal") < 0)
+        {
+            characterscale.x = -1;
+        }
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            characterscale.x = 1;
+        }
+        transform.localScale = characterscale;
     }
+   
 }
