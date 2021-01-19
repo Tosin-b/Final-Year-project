@@ -6,7 +6,7 @@ public class NewBehaviourScript: MonoBehaviour
 {
 
     public float Jumpforce = 1;
-    public float MoveMentSpeed = 1.0f;
+    public float MoveMentSpeed =25.0f ;
     public GameObject bulletPrefabs;
     private Rigidbody2D rigidbody;
     public Animator animator;
