@@ -19,7 +19,7 @@ public class NewBehaviourScript: MonoBehaviour
     private void Update()
     {
         var movement = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
+         transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
         //transform.localScale = new Vector2(-1, 1);
         animator.SetFloat("running",Mathf.Abs(movement));
 
@@ -35,6 +35,7 @@ public class NewBehaviourScript: MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.S))
         {
+            animator.Play("Shoot");
             shootBullet();
             Debug.Log("testing shoot button");
         }
@@ -53,7 +54,7 @@ public class NewBehaviourScript: MonoBehaviour
         void shootBullet()
         {
             GameObject b = Instantiate(bulletPrefabs) as GameObject;
-            b.transform.position = transform.position;
+            b.transform.position = new Vector3(transform.position.x + 0.4f, 5f , 0) * Time.deltaTime * MoveMentSpeed;
         }
     }
    
