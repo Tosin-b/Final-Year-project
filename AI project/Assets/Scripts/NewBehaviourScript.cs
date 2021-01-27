@@ -7,16 +7,25 @@ public class NewBehaviourScript: MonoBehaviour
 
     public float Jumpforce = 1;
     public float MoveMentSpeed =25.0f ;
+
+    [SerializeField]
     public GameObject bulletPrefabs;
+
     private Rigidbody2D rigidbody;
     public Animator animator;
+    private bool IsShhoting;
+
+    [SerializeField]
+    Transform bulletSpawnpos;
+
+   
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
-    private void Update()
+    private void  FixedUpdate()
     {
         var movement = Input.GetAxis("Horizontal");
          transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
@@ -37,7 +46,7 @@ public class NewBehaviourScript: MonoBehaviour
         {
             animator.Play("Shoot");
             shootBullet();
-            Debug.Log("testing shoot button");
+           
         }
 
         Vector3 characterscale = transform.localScale;
@@ -53,11 +62,15 @@ public class NewBehaviourScript: MonoBehaviour
 
         void shootBullet()
         {
-            GameObject b = Instantiate(bulletPrefabs) as GameObject;
-            b.transform.position = new Vector3(transform.position.x + 0.4f, 5f , 0) * Time.deltaTime * MoveMentSpeed;
+            GameObject b = Instantiate(bulletPrefabs);
+            Debug.Log("SHOWBULLET");
+            b.GetComponent<Rigidbody2D>().velocity = new Vector2(3, 0);
+            b.transform.position = bulletSpawnpos.transform.position;
+            //b.transform.position = new Vector3(transform.position.x + 0.4f, 5f , 0) * Time.deltaTime * MoveMentSpeed;
         }
     }
    
+
 }
  
     
