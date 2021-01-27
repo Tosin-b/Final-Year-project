@@ -18,6 +18,7 @@ public class NewBehaviourScript: MonoBehaviour
     [SerializeField]
     Transform bulletSpawnpos;
 
+    bool isFacingLeft;
    
 
     private void Start()
@@ -25,10 +26,12 @@ public class NewBehaviourScript: MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
-    private void  FixedUpdate()
+    private void Update()
     {
         var movement = Input.GetAxis("Horizontal");
          transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
+        Debug.Log(movement);
+        bulletDirection();
         //transform.localScale = new Vector2(-1, 1);
         animator.SetFloat("running",Mathf.Abs(movement));
 
@@ -64,9 +67,21 @@ public class NewBehaviourScript: MonoBehaviour
         {
             GameObject b = Instantiate(bulletPrefabs);
             Debug.Log("SHOWBULLET");
-            b.GetComponent<Rigidbody2D>().velocity = new Vector2(3, 0);
+            b.GetComponent<Bullet>().StartShoot(isFacingLeft);
             b.transform.position = bulletSpawnpos.transform.position;
             //b.transform.position = new Vector3(transform.position.x + 0.4f, 5f , 0) * Time.deltaTime * MoveMentSpeed;
+        }
+        
+        void bulletDirection()
+        {
+            if (movement > 0.01)
+            {
+                isFacingLeft = true;
+            }
+            else if (movement < -0.01)
+            {
+                isFacingLeft = false;
+            }
         }
     }
    

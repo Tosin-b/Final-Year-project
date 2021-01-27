@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 15.0f;
+    [SerializeField]
+    float speed;
+
+    [SerializeField]
+    int damage;
     private Rigidbody2D rb;
     private Vector2 ScreenBounds;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector3(speed, 0);
-        //rb.AddForce(new Vector2(20, 0));
-        ScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-    }
 
-    // Update is called once per frame
-    void Update()
+    public void StartShoot(bool isFacingLeft)
     {
-        if(transform.position.x > ScreenBounds.x - 2)
+
+        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+        if (isFacingLeft)
         {
-            Destroy(this.gameObject);
+            rb2d.velocity = new Vector2(speed, 0);
+        }
+        else
+        {
+            rb2d.velocity = new Vector2(-speed, 0);
         }
     }
 }
