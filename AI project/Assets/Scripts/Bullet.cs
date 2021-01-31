@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 ScreenBounds;
 
+    [SerializeField]
+    float timeToDestroy = 3;
 
     public void StartShoot(bool isFacingLeft)
     {
@@ -25,5 +27,7 @@ public class Bullet : MonoBehaviour
         {
             rb2d.velocity = new Vector2(-speed, 0);
         }
+
+        Destroy(gameObject,timeToDestroy);
     }
 }
