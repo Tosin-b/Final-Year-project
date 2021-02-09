@@ -83,6 +83,11 @@ public class NewBehaviourScript: MonoBehaviour
                 isFacingLeft = false;
             }
         }
+        void Player_damage()
+        {
+           // if(Col
+           //WaitForSeconds()
+        }
     }
    
 
