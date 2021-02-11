@@ -76,6 +76,7 @@ public class EnenyScript : MonoBehaviour
         if(collision.CompareTag("Bullet"))
         {
             Destroy(collision.gameObject);
+            
             health--;
             if(health <= 0)
             {
@@ -91,4 +92,6 @@ public class EnenyScript : MonoBehaviour
         else if(transform.position.x<0.01)
             animator.SetFloat("run-crab", transform.position.x);
     }
+
+   
 }
