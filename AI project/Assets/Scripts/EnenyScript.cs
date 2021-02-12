@@ -17,16 +17,15 @@ public class EnenyScript : MonoBehaviour
     [SerializeField]
     Transform Bullet;
 
-    [SerializeField]
-    GameObject explode;
     
     public Animator animator;
 
     Rigidbody2D rb;
-    private int health =10;
+    private int health =3;
 
     private Material matwhite;
     private Material matDefault;
+    private UnityEngine.Object explosionref;
     SpriteRenderer sr;
 
     // Start is called before the first frame update
@@ -38,6 +37,7 @@ public class EnenyScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         matwhite = Resources.Load("WhiteFlash", typeof(Material)) as Material;
         matDefault = sr.material;
+        explosionref = Resources.Load("Explosion");
     }
 
 
@@ -90,13 +90,12 @@ public class EnenyScript : MonoBehaviour
             Destroy(collision.gameObject);
             health--;
             sr.material = matwhite;
-            GameObject e = Instantiate(explode) as GameObject;
+         
            
 
             if (health <= 0)
             {
-                e.transform.position = transform.position;
-                Destroy(gameObject);
+                killself();
             }
             else
             {
@@ -104,11 +103,21 @@ public class EnenyScript : MonoBehaviour
             }
         }
     }
+
+   
+
     private void ResetMaterial()
     {
         sr.material = matDefault;
     }
- 
+    private void killself()
+    {
+        GameObject explosionn = (GameObject)Instantiate(explosionref);
+        explosionn.transform.position = new Vector3(transform.position.x, transform.position.y + .3f, transform.position.z);
+        Destroy(gameObject);
+
+    }
+
 
     private void enenyMovement()
     {
