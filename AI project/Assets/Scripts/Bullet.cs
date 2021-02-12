@@ -11,17 +11,20 @@ public class Bullet : MonoBehaviour
     int damage;
     private Rigidbody2D rb;
     private Vector2 ScreenBounds;
-  
 
+  
+    
 
     [SerializeField]
     float timeToDestroy = 3;
 
-    [SerializeField] public GameObject explosion;
+   // [SerializeField] public GameObject explosion;
     public void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
+
+    
 
     public void StartShoot(bool isFacingLeft)
     {
@@ -38,14 +41,6 @@ public class Bullet : MonoBehaviour
 //
         Destroy(gameObject,timeToDestroy);
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.CompareTag("enemy"))
-        {
-            GameObject e = Instantiate(explosion) as GameObject;
-            e.transform.position = transform.position;
-            Destroy(other.gameObject, timeToDestroy);
-        }
-    }
+    
 
 }

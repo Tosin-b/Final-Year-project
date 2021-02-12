@@ -13,18 +13,31 @@ public class EnenyScript : MonoBehaviour
 
     [SerializeField]
     float movespeed;
+
+    [SerializeField]
+    Transform Bullet;
+
+    [SerializeField]
+    GameObject explode;
     
     public Animator animator;
 
     Rigidbody2D rb;
     private int health =10;
 
+    private Material matwhite;
+    private Material matDefault;
+    SpriteRenderer sr;
+
     // Start is called before the first frame update
     void Start()
 
     {
+        sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        matwhite = Resources.Load("WhiteFlash", typeof(Material)) as Material;
+        matDefault = sr.material;
     }
 
 
@@ -38,12 +51,10 @@ public class EnenyScript : MonoBehaviour
         if(distFromPlayer < agrorange)
         {
             chase();
-          
         }
         else
         {
             stopchasing();
-        
         }
     }
 
@@ -70,20 +81,34 @@ public class EnenyScript : MonoBehaviour
         }
     }
     
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Bullet"))
         {
             Destroy(collision.gameObject);
-            
             health--;
-            if(health <= 0)
+            sr.material = matwhite;
+            GameObject e = Instantiate(explode) as GameObject;
+           
+
+            if (health <= 0)
             {
+                e.transform.position = transform.position;
                 Destroy(gameObject);
+            }
+            else
+            {
+                Invoke("ResetMaterial", .1f);
             }
         }
     }
+    private void ResetMaterial()
+    {
+        sr.material = matDefault;
+    }
+ 
 
     private void enenyMovement()
     {
