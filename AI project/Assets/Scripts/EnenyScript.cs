@@ -46,7 +46,7 @@ public class EnenyScript : MonoBehaviour
     {
         float distFromPlayer = Vector2.Distance(transform.position, player.position);
         enenyMovement();
-        Debug.Log("distFromPlayer:" + distFromPlayer);
+        //Debug.Log("distFromPlayer:" + distFromPlayer);
 
         if(distFromPlayer < agrorange)
         {
@@ -102,6 +102,8 @@ public class EnenyScript : MonoBehaviour
                 Invoke("ResetMaterial", .1f);
             }
         }
+
+       
     }
 
    
@@ -128,4 +130,5 @@ public class EnenyScript : MonoBehaviour
     }
 
    
+
 }

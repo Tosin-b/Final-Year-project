@@ -30,7 +30,7 @@ public class NewBehaviourScript: MonoBehaviour
     {
         var movement = Input.GetAxis("Horizontal");
          transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
-        Debug.Log(movement);
+        //Debug.Log(movement);
         bulletDirection();
         //transform.localScale = new Vector2(-1, 1);
         animator.SetFloat("running",Mathf.Abs(movement));
@@ -89,7 +89,15 @@ public class NewBehaviourScript: MonoBehaviour
            //WaitForSeconds()
         }
     }
-   
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if(collision.com)
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
+
 
 }
  
