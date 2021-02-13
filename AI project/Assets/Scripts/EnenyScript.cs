@@ -21,6 +21,8 @@ public class EnenyScript : MonoBehaviour
     public Animator animator;
 
     Rigidbody2D rb;
+
+    [SerializeField]
     private int health =3;
 
     private Material matwhite;
