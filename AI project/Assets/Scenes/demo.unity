@@ -811,7 +811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -485, y: 161.2}
+  m_AnchoredPosition: {x: -445.6, y: 155.4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &229027855
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player heath:'
+  m_text: 'Player Health:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -861,8 +861,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -899,10 +899,10 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 57.661163, w: 16.114609}
+  m_margin: {x: 0, y: 0, z: 86.00736, w: 25.245102}
   m_textInfo:
     textComponent: {fileID: 229027855}
-    characterCount: 13
+    characterCount: 14
     spriteCount: 0
     spaceCount: 1
     wordCount: 2
@@ -1221,6 +1221,7 @@ GameObject:
   - component: {fileID: 489900848}
   - component: {fileID: 489900850}
   - component: {fileID: 489900849}
+  - component: {fileID: 489900851}
   m_Layer: 0
   m_Name: player-idle-1
   m_TagString: Player
@@ -1379,6 +1380,19 @@ MonoBehaviour:
   animator: {fileID: 489900849}
   bulletSpawnpos: {fileID: 1406394706}
   Player_health: 10
+--- !u!114 &489900851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489900844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4d7e761ce72bd4fb90405142ba78e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawn: 0
 --- !u!1 &521381616
 GameObject:
   m_ObjectHideFlags: 0
@@ -9905,7 +9919,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584227863}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.95, y: -2.24, z: 1.0195097}
+  m_LocalPosition: {x: 8.72, y: -1.99, z: 1.0195097}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1379809842}
@@ -10877,7 +10891,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929537885}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.26, y: 0.83, z: 0.10004145}
+  m_LocalPosition: {x: 9.04, y: 0.7, z: 0.10004145}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 305104471}

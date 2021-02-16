@@ -102,7 +102,8 @@ public class NewBehaviourScript: MonoBehaviour
         {
             float hurt = 2f;
             Player_health = Player_health - hurt;
-            rigidbody.AddForce(new Vector2(-1,0),ForceMode2D.Impulse);
+            rigidbody.AddForce(new Vector2(-12f,0),ForceMode2D.Impulse);
+            animator.Play("nurt");
 
         }
     }
