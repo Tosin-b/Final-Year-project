@@ -7,6 +7,7 @@ public class NewBehaviourScript: MonoBehaviour
 
     public float Jumpforce = 1;
     public float MoveMentSpeed =25.0f ;
+   
 
     [SerializeField]
     public GameObject bulletPrefabs;
@@ -17,6 +18,9 @@ public class NewBehaviourScript: MonoBehaviour
 
     [SerializeField]
     Transform bulletSpawnpos;
+
+    [SerializeField]
+    public float Player_health =10f;
 
     bool isFacingLeft;
    
@@ -83,22 +87,25 @@ public class NewBehaviourScript: MonoBehaviour
                 isFacingLeft = false;
             }
         }
-        void Player_damage()
-        {
-           // if(Col
-           //WaitForSeconds()
-        }
+       
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if(collision.com)
+        Procces(collision.gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void Procces(GameObject gameObject)
     {
-        
+        if (gameObject.CompareTag("enemy"))
+
+        {
+            float hurt = 2f;
+            Player_health = Player_health - hurt;
+            rigidbody.AddForce(new Vector2(-1,0),ForceMode2D.Impulse);
+
+        }
     }
-
-
 }
  
     

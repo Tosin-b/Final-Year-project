@@ -42,7 +42,7 @@ public class EnemyJumper : MonoBehaviour
     {
         float distFromPlayer2 = Vector2.Distance(transform.position, player.position);
         
-        Debug.Log("distFromPlayer:" + distFromPlayer2);
+       // Debug.Log("distFromPlayer:" + distFromPlayer2);
 
         if (distFromPlayer2 < agrorange)
         {

@@ -1,15 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class powerUp : MonoBehaviour
 {
     private Rigidbody2D rb;
+    NewBehaviourScript player;
+    public float newhealth;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        player = FindObjectOfType<NewBehaviourScript>();
+        
         
     }
 
@@ -18,9 +23,16 @@ public class powerUp : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            Debug.Log("they have collided");
+            Damage();
           
             Destroy(gameObject);
         }
+    }
+
+    private void Damage()
+    {
+        player.Player_health = player.Player_health + 1;
+       
+        
     }
 }
