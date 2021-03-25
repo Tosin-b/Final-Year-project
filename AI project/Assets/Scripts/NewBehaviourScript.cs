@@ -3,16 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
 
-public class NewBehaviourScript: Agent
+
+public class NewBehaviourScript : Agent
 {
 
     public float Jumpforce = 1;
-    public float MoveMentSpeed =25.0f ;
-   
+    public float MoveMentSpeed = 25.0f;
+
 
     [SerializeField]
     public GameObject bulletPrefabs;
+
+    [SerializeField]
+    Transform enemy;
+
+    //[SerializeField]
+    //GameObject checkingEnemyTag;
+
+    [SerializeField]
+    float castDistnce;
+
+    [SerializeField]
+    float agrorange;
 
     private Rigidbody2D rigidbody;
     public Animator animator;
@@ -22,74 +36,168 @@ public class NewBehaviourScript: Agent
     Transform bulletSpawnpos;
 
     [SerializeField]
-    public float Player_health =10f;
+    public float Player_health = 10f;
 
     bool isFacingLeft;
-   
+
+    float shootingTime = 0.23f;
+
+    public float firerate = 0.4f;
+
+    public Respawn respawn;
+    Vector3 previousPosition;
+    Vector3 currentPosition;
+
+
+    public void Awake()
+    {
+        previousPosition = transform.position;
+    }
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
-    private void Update()
+    public override void OnEpisodeBegin()
     {
-        var movement = Input.GetAxis("Horizontal");
-         transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MoveMentSpeed;
-        //Debug.Log(movement);
+        Falling();
+    }
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        Vector2 endpos = transform.position + Vector3.right * castDistnce;
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, endpos, 1 << LayerMask.NameToLayer("Action"));
+
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(hit);
+        sensor.AddObservation(transform.position.x);
+        sensor.AddObservation(transform.position.y);
+
+    }
+    public void Update()
+    {
+        currentPosition = transform.position;
+        // Debug.Log("Current position: " + currentPosition);
+        // Debug.Log("Previous Position: " + previousPosition);
+
+        if (currentPosition.x > previousPosition.x)
+        {
+            Debug.Log("Well done you are progressing  :)" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
+            AddReward(0.05f);
+        }
+        else if (currentPosition.x < previousPosition.x)
+        {
+            Debug.Log("You are going backwards o_o" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
+            AddReward(-0.1f);
+
+        }
+
+        previousPosition = currentPosition;
+
+    }
+
+
+    public float forceMultiplier = 25;
+    public override void OnActionReceived(ActionBuffers actions)
+    {
+
+        Vector3 controlSignal = Vector3.zero;
+        controlSignal.x = actions.ContinuousActions[0];
+        controlSignal.y = actions.ContinuousActions[1];
+
         bulletDirection();
-        //transform.localScale = new Vector2(-1, 1);
-        animator.SetFloat("running",Mathf.Abs(movement));
-
-        if (Input.GetButtonDown("Jump"))
+        Falling();
+        autoshoot();
+        isJumping();
+        void LeftRight()
         {
-            animator.SetTrigger("isjumping");
+            Vector3 characterscale = transform.localScale;
+            if (controlSignal.x < 0)
+            {
+                characterscale.x = -1;
+            }
+            if (controlSignal.x > 0)
+            {
+                characterscale.x = 1;
+            }
+            transform.localScale = characterscale;
         }
 
-        if (Input.GetButtonDown("Jump") && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
-        {
-            Debug.Log("testing");
-            rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
-        }
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            animator.Play("Shoot");
-            shootBullet();
-           
-        }
 
-        Vector3 characterscale = transform.localScale;
-        if(Input.GetAxis("Horizontal") < 0)
-        {
-            characterscale.x = -1;
-        }
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            characterscale.x = 1;
-        }
-        transform.localScale = characterscale;
+        transform.position += new Vector3(controlSignal.x, 0, 0) * Time.deltaTime * MoveMentSpeed;
 
-        void shootBullet()
+
+
+        if (controlSignal.x > 0.01)
         {
-            GameObject b = Instantiate(bulletPrefabs);
-            Debug.Log("SHOWBULLET");
-            b.GetComponent<Bullet>().StartShoot(isFacingLeft);
-            b.transform.position = bulletSpawnpos.transform.position;
-            //b.transform.position = new Vector3(transform.position.x + 0.4f, 5f , 0) * Time.deltaTime * MoveMentSpeed;
+            LeftRight();
+            animator.SetFloat("running", Mathf.Abs(transform.position.x));
+            Debug.Log("Player is moving");
         }
-        
         void bulletDirection()
         {
-            if (movement > 0.01)
+            if (controlSignal.x > 0.01)
             {
                 isFacingLeft = true;
             }
-            else if (movement < -0.01)
+            else if (controlSignal.x < -0.01)
             {
                 isFacingLeft = false;
             }
         }
-       
+
+
+
+    }
+
+
+
+    public void Falling()
+    {
+        if (transform.position.y < -8)
+        {
+            respawn.falloff();
+        }
+    }
+
+    public void isJumping()
+    {
+        if (transform.position.y == 1)
+        {
+            animator.SetTrigger("isjumping");
+        }
+
+        if (transform.position.y == 1 && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
+        {
+            Debug.Log("testing");
+            rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
+        }
+    }
+    public void autoshoot()
+    {
+        Vector2 endpos = transform.position + Vector3.right * castDistnce;
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, endpos, 1 << LayerMask.NameToLayer("Action"));
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.CompareTag("enemy") && Time.time > shootingTime + firerate)
+            {
+
+                shootingTime = Time.time;
+                Debug.Log("shooter");
+                shootBullet();
+                //sets a reward
+                AddReward(1.0f);
+            }
+
+        }
+    }
+
+    public void shootBullet()
+    {
+        animator.Play("Shoot");
+        GameObject b = Instantiate(bulletPrefabs);
+        b.GetComponent<Bullet>().StartShoot(isFacingLeft);
+        b.transform.position = bulletSpawnpos.transform.position;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -102,15 +210,27 @@ public class NewBehaviourScript: Agent
         if (gameObject.CompareTag("enemy"))
 
         {
-            animator.Play("hurt");
+
             float hurt = 2f;
             Player_health = Player_health - hurt;
-            rigidbody.AddForce(new Vector2(-12f,0),ForceMode2D.Impulse);
-            
+            rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
+            animator.Play("hurt");
+            AddReward(-0.5f);
 
         }
     }
-}
- 
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var continuousActionsOut = actionsOut.ContinuousActions;
+        continuousActionsOut[0] = Input.GetAxis("Horizontal");
+        continuousActionsOut[1] = Input.GetAxis("Vertical");
+
+    }
+
     
-   
+
+}
+
+
+
