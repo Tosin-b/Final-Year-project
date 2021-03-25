@@ -41,7 +41,7 @@ public class Octupus : MonoBehaviour
     void Update()
     {
         float distFromPlayer = Vector2.Distance(transform.position, player.position);
-        enenyMovement();
+       
         //Debug.Log("distFromPlayer:" + distFromPlayer);
 
         if (distFromPlayer < agrorange)
@@ -117,13 +117,6 @@ public class Octupus : MonoBehaviour
     }
 
 
-    private void enenyMovement()
-    {
-        if (transform.position.x > 0.01)
-            animator.SetFloat("run-crab", transform.position.x);
-        else if (transform.position.x < 0.01)
-            animator.SetFloat("run-crab", transform.position.x);
-    }
-
+    
 
 }

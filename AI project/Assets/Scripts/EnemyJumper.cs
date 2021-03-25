@@ -9,10 +9,10 @@ public class EnemyJumper : MonoBehaviour
     Transform player;
 
     [SerializeField]
-    float agrorange;
+    float agrorange =5;
 
     [SerializeField]
-    float movespeed;
+    float movespeed = 6;
 
     [SerializeField]
     Transform Bullet;
