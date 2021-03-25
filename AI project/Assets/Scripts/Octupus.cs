@@ -8,10 +8,10 @@ public class Octupus : MonoBehaviour
     Transform player;
 
     [SerializeField]
-    float agrorange;
+    float agrorange =6;
 
     [SerializeField]
-    float movespeed;
+    float movespeed = 7;
 
     [SerializeField]
     Transform Bullet;
@@ -63,19 +63,20 @@ public class Octupus : MonoBehaviour
     {
         if (transform.position.x < player.position.x)
         {
-            animator.SetFloat("run-crab", Mathf.Abs(transform.position.x));
+            // animator.SetFloat("run-crab", Mathf.Abs(transform.position.x));
             rb.velocity = new Vector2(movespeed, 0);
             transform.localScale = new Vector2(-1, 1);
 
         }
         else if (transform.position.x > player.position.x)
         {
-            animator.SetFloat("run-crab", Mathf.Abs(transform.position.x));
+            // animator.SetFloat("run-crab", Mathf.Abs(transform.position.x));
             rb.velocity = new Vector2(-movespeed, 0);
             transform.localScale = new Vector2(1, 1);
 
         }
     }
+
 
 
 

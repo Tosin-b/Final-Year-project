@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 
-public class NewBehaviourScript: MonoBehaviour
+public class NewBehaviourScript: Agent
 {
 
     public float Jumpforce = 1;
@@ -100,10 +102,11 @@ public class NewBehaviourScript: MonoBehaviour
         if (gameObject.CompareTag("enemy"))
 
         {
+            animator.Play("hurt");
             float hurt = 2f;
             Player_health = Player_health - hurt;
             rigidbody.AddForce(new Vector2(-12f,0),ForceMode2D.Impulse);
-            animator.Play("nurt");
+            
 
         }
     }

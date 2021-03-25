@@ -9,10 +9,10 @@ public class EnenyScript : MonoBehaviour
     Transform player;
 
     [SerializeField]
-    float agrorange;
+    float agrorange =7;
 
     [SerializeField]
-    float movespeed;
+    float movespeed = 5;
 
     [SerializeField]
     Transform Bullet;

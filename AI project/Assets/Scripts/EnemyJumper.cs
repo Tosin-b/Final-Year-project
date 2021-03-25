@@ -30,7 +30,6 @@ public class EnemyJumper : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-    
         rb = GetComponent<Rigidbody2D>();
         matwhite = Resources.Load("WhiteFlash", typeof(Material)) as Material;
         matDefault = sr.material;
