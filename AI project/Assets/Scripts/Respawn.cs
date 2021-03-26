@@ -27,4 +27,12 @@ public class Respawn : MonoBehaviour
             SceneManager.LoadScene(respawn);
         }
     }
+    public void falloff()
+    {
+        if(transform.position.y <= -8)
+        {
+            SceneManager.LoadScene(respawn);
+
+        }
+    }
 }
