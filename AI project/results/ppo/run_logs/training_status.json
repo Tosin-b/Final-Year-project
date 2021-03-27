@@ -1,0 +1,23 @@
+{
+    "MLPlayer": {
+        "checkpoints": [
+            {
+                "steps": 40089,
+                "file_path": "results\\ppo\\MLPlayer\\MLPlayer-40089.onnx",
+                "reward": 4.112500108778477,
+                "creation_time": 1616806647.7595918
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 40089,
+            "file_path": "results\\ppo\\MLPlayer.onnx",
+            "reward": 4.112500108778477,
+            "creation_time": 1616806647.7595918
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.24.1",
+        "torch_version": "1.7.1+cpu"
+    }
+}

@@ -16,8 +16,8 @@ public class NewBehaviourScript : Agent
     [SerializeField]
     public GameObject bulletPrefabs;
 
-    [SerializeField]
-    Transform enemy;
+   // [SerializeField]
+    //Transform enemy;
 
     //[SerializeField]
     //GameObject checkingEnemyTag;
@@ -73,6 +73,8 @@ public class NewBehaviourScript : Agent
         sensor.AddObservation(transform.position.x);
         sensor.AddObservation(transform.position.y);
 
+       
+
     }
     public void Update()
     {
@@ -83,12 +85,13 @@ public class NewBehaviourScript : Agent
         if (currentPosition.x > previousPosition.x)
         {
             Debug.Log("Well done you are progressing  :)" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
-            AddReward(0.05f);
+            AddReward(0.2f);
         }
         else if (currentPosition.x < previousPosition.x)
         {
             Debug.Log("You are going backwards o_o" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
-            AddReward(-0.1f);
+            AddReward(-0.4f);
+            RequestDecision();
 
         }
 
@@ -108,7 +111,7 @@ public class NewBehaviourScript : Agent
         bulletDirection();
         Falling();
         autoshoot();
-        isJumping();
+        //isJumping();
         void LeftRight()
         {
             Vector3 characterscale = transform.localScale;
@@ -151,7 +154,6 @@ public class NewBehaviourScript : Agent
     }
 
 
-
     public void Falling()
     {
         if (transform.position.y < -8)
@@ -160,19 +162,7 @@ public class NewBehaviourScript : Agent
         }
     }
 
-    public void isJumping()
-    {
-        if (transform.position.y == 1)
-        {
-            animator.SetTrigger("isjumping");
-        }
-
-        if (transform.position.y == 1 && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
-        {
-            Debug.Log("testing");
-            rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
-        }
-    }
+  
     public void autoshoot()
     {
         Vector2 endpos = transform.position + Vector3.right * castDistnce;
@@ -216,6 +206,7 @@ public class NewBehaviourScript : Agent
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
             animator.Play("hurt");
             AddReward(-0.5f);
+            EndEpisode();
 
         }
     }

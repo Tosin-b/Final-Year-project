@@ -93,7 +93,6 @@ public class EnenyScript : MonoBehaviour
             health--;
             sr.material = matwhite;
          
-           
 
             if (health <= 0)
             {

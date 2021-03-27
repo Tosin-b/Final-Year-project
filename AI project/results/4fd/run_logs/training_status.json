@@ -1,0 +1,23 @@
+{
+    "My Behavior": {
+        "checkpoints": [
+            {
+                "steps": 2048,
+                "file_path": "results\\4fd\\My Behavior\\My Behavior-2048.onnx",
+                "reward": null,
+                "creation_time": 1616801411.5772498
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2048,
+            "file_path": "results\\4fd\\My Behavior.onnx",
+            "reward": null,
+            "creation_time": 1616801411.5772498
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.24.1",
+        "torch_version": "1.7.1+cpu"
+    }
+}
