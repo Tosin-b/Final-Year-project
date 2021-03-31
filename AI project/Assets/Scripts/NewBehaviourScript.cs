@@ -48,6 +48,8 @@ public class NewBehaviourScript : Agent
     Vector3 previousPosition;
     Vector3 currentPosition;
 
+   
+    public bool jumpingFlag = false;
 
     public void Awake()
     {
@@ -84,12 +86,12 @@ public class NewBehaviourScript : Agent
 
         if (currentPosition.x > previousPosition.x)
         {
-            Debug.Log("Well done you are progressing  :)" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
+           // Debug.Log("Well done you are progressing  :)" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
             AddReward(0.2f);
         }
         else if (currentPosition.x < previousPosition.x)
         {
-            Debug.Log("You are going backwards o_o" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
+            //Debug.Log("You are going backwards o_o" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
             AddReward(-0.4f);
             RequestDecision();
 
@@ -103,8 +105,8 @@ public class NewBehaviourScript : Agent
     public float forceMultiplier = 25;
     public override void OnActionReceived(ActionBuffers actions)
     {
+          Vector3 controlSignal = Vector3.zero;
 
-        Vector3 controlSignal = Vector3.zero;
         controlSignal.x = actions.ContinuousActions[0];
         controlSignal.y = actions.ContinuousActions[1];
 
@@ -112,6 +114,12 @@ public class NewBehaviourScript : Agent
         Falling();
         autoshoot();
         //isJumping();
+        Debug.Log(" controlSignal.y = " + controlSignal.y);
+
+        if (controlSignal.y == 1)
+        {
+            Debug.Log("hi");
+        }
         void LeftRight()
         {
             Vector3 characterscale = transform.localScale;
@@ -128,15 +136,24 @@ public class NewBehaviourScript : Agent
 
 
         transform.position += new Vector3(controlSignal.x, 0, 0) * Time.deltaTime * MoveMentSpeed;
-
-
+        
+         
+       
 
         if (controlSignal.x > 0.01)
         {
             LeftRight();
             animator.SetFloat("running", Mathf.Abs(transform.position.x));
-            Debug.Log("Player is moving");
+           // Debug.Log("Player is moving");
+
+        }else if (controlSignal.x <-0.01) 
+        {
+            LeftRight();
+            animator.SetFloat("running", Mathf.Abs(transform.position.x));
+          //  Debug.Log("Player is moving");
         }
+
+        // add code for swithing to the left
         void bulletDirection()
         {
             if (controlSignal.x > 0.01)
@@ -148,7 +165,10 @@ public class NewBehaviourScript : Agent
                 isFacingLeft = false;
             }
         }
-
+        if (gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("hi");
+        }
 
 
     }
@@ -173,7 +193,6 @@ public class NewBehaviourScript : Agent
             {
 
                 shootingTime = Time.time;
-                Debug.Log("shooter");
                 shootBullet();
                 //sets a reward
                 AddReward(1.0f);
@@ -210,6 +229,9 @@ public class NewBehaviourScript : Agent
 
         }
     }
+
+  
+    
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
