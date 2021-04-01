@@ -26,6 +26,9 @@ public class NewBehaviourScript : Agent
     float castDistnce;
 
     [SerializeField]
+    float castDistnce1;
+
+    [SerializeField]
     float agrorange;
 
     private Rigidbody2D rigidbody;
@@ -75,7 +78,6 @@ public class NewBehaviourScript : Agent
         sensor.AddObservation(transform.position.x);
         sensor.AddObservation(transform.position.y);
 
-       
 
     }
     public void Update()
@@ -103,22 +105,26 @@ public class NewBehaviourScript : Agent
 
 
     public float forceMultiplier = 25;
-    public override void OnActionReceived(ActionBuffers actions)
+    public override void OnActionReceived(float[] vectorAction)
     {
           Vector3 controlSignal = Vector3.zero;
 
-        controlSignal.x = actions.ContinuousActions[0];
-        controlSignal.y = actions.ContinuousActions[1];
+        controlSignal.x = vectorAction[0];
+        controlSignal.y = vectorAction[1];
 
         bulletDirection();
         Falling();
         autoshoot();
+        jumpDirection();
         //isJumping();
-        Debug.Log(" controlSignal.y = " + controlSignal.y);
+        //Debug.Log(" controlSignal.y = " + controlSignal.y);
 
-        if (controlSignal.y == 1)
+        if(vectorAction[1] == 1 && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
         {
-            Debug.Log("hi");
+            vectorAction[1] = 0;
+            rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
+            Debug.Log("checking for jump to end");
+            
         }
         void LeftRight()
         {
@@ -134,8 +140,8 @@ public class NewBehaviourScript : Agent
             transform.localScale = characterscale;
         }
 
-
-        transform.position += new Vector3(controlSignal.x, 0, 0) * Time.deltaTime * MoveMentSpeed;
+        //rigidbody.AddForce(controlSignal.x * forceMultiplier, ForceMode2D.Force);
+       transform.position += new Vector3(controlSignal.x, 0, 0) * Time.deltaTime * MoveMentSpeed;
         
          
        
@@ -165,11 +171,25 @@ public class NewBehaviourScript : Agent
                 isFacingLeft = false;
             }
         }
-        if (gameObject.CompareTag("Obstacle"))
+        void jumpDirection()
         {
-            Debug.Log("hi");
-        }
+            Vector2 endpos1 = transform.position + Vector3.right * castDistnce1;
+            RaycastHit2D hit1 = Physics2D.Linecast(transform.position, endpos1, 1 << LayerMask.NameToLayer("Obstacle"));
+            if(hit1.collider != null)
+            {
+                if (hit1.collider.gameObject.CompareTag("Obstacle"))
+                {
+                    vectorAction[1] = 1;
+                }
+            }
+            else
+            {
+                Debug.DrawLine(transform.position, endpos1, Color.blue);
 
+            }
+
+        }
+        
 
     }
 
@@ -185,6 +205,7 @@ public class NewBehaviourScript : Agent
   
     public void autoshoot()
     {
+        
         Vector2 endpos = transform.position + Vector3.right * castDistnce;
         RaycastHit2D hit = Physics2D.Linecast(transform.position, endpos, 1 << LayerMask.NameToLayer("Action"));
         if (hit.collider != null)
@@ -197,7 +218,12 @@ public class NewBehaviourScript : Agent
                 //sets a reward
                 AddReward(1.0f);
             }
+            
 
+        }
+        else
+        {
+            Debug.DrawLine(transform.position, endpos, Color.black);
         }
     }
 
@@ -212,6 +238,14 @@ public class NewBehaviourScript : Agent
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Procces(collision.gameObject);
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("wel done");
+        }
+         if (collision.gameObject.CompareTag("wallReward"))
+        {
+            Debug.Log("nice u hit the wall ------------");
+        }
     }
 
     private void Procces(GameObject gameObject)
@@ -230,14 +264,23 @@ public class NewBehaviourScript : Agent
         }
     }
 
-  
-    
-
-    public override void Heuristic(in ActionBuffers actionsOut)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Horizontal");
-        continuousActionsOut[1] = Input.GetAxis("Vertical");
+        if(collision.gameObject.CompareTag("wallReward"))
+        {
+            Debug.Log("you hit te reward");
+        }
+    }
+
+
+    public override void Heuristic(float[] actionsOut)
+    
+    {
+        actionsOut[1] = 0;
+        actionsOut[0] = Input.GetAxis("Horizontal");
+        if (Input.GetKey(KeyCode.UpArrow) == true){
+            actionsOut[1] = 1;
+        }
 
     }
 

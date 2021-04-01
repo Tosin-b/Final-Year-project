@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Octupus.cs" />
     <Compile Include="Assets\Scripts\Respawn.cs" />
+    <Compile Include="Assets\Scripts\invis.cs" />
     <Compile Include="Assets\Scripts\powerUp.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -720,6 +721,12 @@
     <Reference Include="Unity.Mathematics">
       <HintPath>C:/Users/tosyn/Documents/new one/project-final/AI project/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>C:/Users/tosyn/Documents/new one/project-final/AI project/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>C:/Users/tosyn/Documents/new one/project-final/AI project/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>C:/Users/tosyn/Documents/new one/project-final/AI project/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
@@ -731,12 +738,6 @@
     </Reference>
     <Reference Include="Unity.Barracuda.ONNX">
       <HintPath>C:/Users/tosyn/Documents/new one/project-final/AI project/Library/ScriptAssemblies/Unity.Barracuda.ONNX.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/tosyn/Documents/new one/project-final/AI project/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/tosyn/Documents/new one/project-final/AI project/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
