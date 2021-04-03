@@ -107,7 +107,9 @@ public class NewBehaviourScript : Agent
     public float forceMultiplier = 25;
     public override void OnActionReceived(float[] vectorAction)
     {
-          Vector3 controlSignal = Vector3.zero;
+
+        bool jumpleft = false;
+        Vector3 controlSignal = Vector3.zero;
 
         controlSignal.x = vectorAction[0];
         controlSignal.y = vectorAction[1];
@@ -115,16 +117,29 @@ public class NewBehaviourScript : Agent
         bulletDirection();
         Falling();
         autoshoot();
-        jumpDirection();
+        jumpingleft();
+        jumpRigth();
         //isJumping();
         //Debug.Log(" controlSignal.y = " + controlSignal.y);
 
         if(vectorAction[1] == 1 && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
         {
             vectorAction[1] = 0;
+            animator.SetTrigger("isjumping");
             rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
-            Debug.Log("checking for jump to end");
+            rigidbody.AddForce(new Vector2(8f, 0), ForceMode2D.Impulse);
+            Debug.Log("Rigth jump is working fine");
             
+        }
+         else if (vectorAction[1] == 2 && Mathf.Abs(rigidbody.velocity.y) < 0.001f && jumpleft == true)
+        {
+            animator.SetTrigger("isjumping");
+            rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
+            rigidbody.AddForce(new Vector2(-8f, 0), ForceMode2D.Impulse);
+            jumpleft = false;
+            vectorAction[1] = 0;
+            Debug.Log("left jumping is workig fine toon");
+           
         }
         void LeftRight()
         {
@@ -171,13 +186,13 @@ public class NewBehaviourScript : Agent
                 isFacingLeft = false;
             }
         }
-        void jumpDirection()
+        void jumpRigth()
         {
             Vector2 endpos1 = transform.position + Vector3.right * castDistnce1;
             RaycastHit2D hit1 = Physics2D.Linecast(transform.position, endpos1, 1 << LayerMask.NameToLayer("Obstacle"));
             if(hit1.collider != null)
             {
-                if (hit1.collider.gameObject.CompareTag("Obstacle"))
+                if (hit1.collider.gameObject.CompareTag("Obstacle") && isFacingLeft == true)
                 {
                     vectorAction[1] = 1;
                 }
@@ -188,6 +203,40 @@ public class NewBehaviourScript : Agent
 
             }
 
+
+            //if (hit1.collider != null)
+            //{
+            //    if (hit1.collider.gameObject.CompareTag("Obstacle"))
+            //    {
+            //        vectorAction[1] = 1;
+            //    }
+            //}
+            //else
+            //{
+            //    Debug.DrawLine(transform.position, endpos1, Color.blue);
+
+            //}
+
+        }
+        void jumpingleft()
+        {
+
+            Vector2 endpos2 = transform.position + Vector3.left * castDistnce1;
+            RaycastHit2D hit2 = Physics2D.Linecast(transform.position, endpos2, 1 << LayerMask.NameToLayer("Obstacle"));
+            if (hit2.collider != null)
+            {
+                jumpleft = true;
+                if (hit2.collider.gameObject.CompareTag("Obstacle") && isFacingLeft == false)
+                {
+
+                    vectorAction[1] = 2;
+                }
+            }
+            else
+            {
+                Debug.DrawLine(transform.position, endpos2, Color.red);
+
+            }
         }
         
 
