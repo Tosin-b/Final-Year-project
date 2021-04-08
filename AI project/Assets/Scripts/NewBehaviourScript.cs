@@ -54,6 +54,11 @@ public class NewBehaviourScript : Agent
    
     public bool jumpingFlag = false;
 
+    public Vector2 pivotPoint = Vector2.zero;
+    public float range = 5.0f;
+    public float angle = 70.0f;
+    private Vector2 startPoint = Vector2.zero;
+
     public void Awake()
     {
         previousPosition = transform.position;
@@ -115,6 +120,7 @@ public class NewBehaviourScript : Agent
         controlSignal.y = vectorAction[1];
 
         bulletDirection();
+        Groundcheck();
         Falling();
         autoshoot();
         jumpingleft();
@@ -204,6 +210,14 @@ public class NewBehaviourScript : Agent
             }
 
 
+            // I impleted the code below to try and change the angle of the raycast
+            //RaycastHit2D test = Physics2D.Raycast(transform.position, -Vector2.up);
+            //Ray ray = new Ray();
+            //ray.origin = transform.position;
+            //ray.direction = Quaternion.AngleAxis(12.0f, Vector3.forward) * Vector3.right;
+            //Debug.DrawLine(transform.position, ray, Color.green);
+            //Debug.DrawLine(test, Color.yellow);
+
             //if (hit1.collider != null)
             //{
             //    if (hit1.collider.gameObject.CompareTag("Obstacle"))
@@ -216,6 +230,24 @@ public class NewBehaviourScript : Agent
             //    Debug.DrawLine(transform.position, endpos1, Color.blue);
 
             //}
+
+        }
+        void Groundcheck()
+        {
+            startPoint = transform.position + Vector3.right; // Update starting ray point.
+
+            // Direct use.
+            // Get normalized (of length = 1) distance vector.
+            // Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized; 
+
+            // Using function.
+            Vector2 direction = GetDirectionVector2D(angle);
+
+            Physics2D.Raycast(startPoint, direction, range); // Shot ray.
+
+            // Draw ray. For Debug we have to multiply our direction vector. 
+            // Even if there is said Debug.DrawRay(start, dir), not Debug.DrawRay(start, end). Keep that in mind.
+            Debug.DrawRay(startPoint, direction * range, Color.yellow);
 
         }
         void jumpingleft()
@@ -242,7 +274,10 @@ public class NewBehaviourScript : Agent
 
     }
 
-
+    public Vector2 GetDirectionVector2D(float angle)
+    {
+        return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(-angle * Mathf.Deg2Rad)).normalized;
+    }
     public void Falling()
     {
         if (transform.position.y < -8)
