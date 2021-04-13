@@ -18,6 +18,7 @@ public class Respawn : MonoBehaviour
     void Update()
     {
         Startover();
+        falloff();
     }
 
     private void Startover()
@@ -32,6 +33,7 @@ public class Respawn : MonoBehaviour
         if(transform.position.y <= -8)
         {
             SceneManager.LoadScene(respawn);
+            Debug.Log("testing respawn");
 
         }
     }

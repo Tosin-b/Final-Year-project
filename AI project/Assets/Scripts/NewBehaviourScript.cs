@@ -73,7 +73,12 @@ public class NewBehaviourScript : Agent
     }
     public override void OnEpisodeBegin()
     {
-        Falling();
+        if (transform.position.y < -8)
+        {
+            Debug.Log("am i falling test");
+            respawn.falloff();
+            EndEpisode();
+        }
     }
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -102,7 +107,7 @@ public class NewBehaviourScript : Agent
         {
             //Debug.Log("You are going backwards o_o" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
             AddReward(-0.4f);
-            RequestDecision();
+           //RequestDecision();
 
         }
 
@@ -124,7 +129,7 @@ public class NewBehaviourScript : Agent
         bulletDirection();
         GroundcheckLeft();
         Groundcheck();
-        Falling();
+        //Falling();
         autoshoot();
         jumpingleft();
         jumpRigth();
@@ -258,7 +263,7 @@ public class NewBehaviourScript : Agent
                 {
                     case 11:
                         vectorAction[1] = 1;
-                        Debug.Log("testing");
+                        
                     break;
 
                     default:
@@ -297,11 +302,10 @@ public class NewBehaviourScript : Agent
                     case 11:
                         jumpleft = true;
                         vectorAction[1] = 2;
-                        Debug.Log("testing");
+                        //Debug.Log("testing");
                         break;
 
-                    default:
-                        break;
+                   
                 }
             }
 
@@ -338,10 +342,7 @@ public class NewBehaviourScript : Agent
     */
     public void Falling()
     {
-        if (transform.position.y < -8)
-        {
-            respawn.falloff();
-        }
+       
     }
 
   
@@ -361,7 +362,6 @@ public class NewBehaviourScript : Agent
                 AddReward(1.0f);
             }
             
-
         }
         else
         {
@@ -410,7 +410,7 @@ public class NewBehaviourScript : Agent
     {
         if(collision.gameObject.CompareTag("wallReward"))
         {
-            Debug.Log("you hit te reward");
+            Debug.Log("you hit the reward");
         }
     }
 
