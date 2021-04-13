@@ -56,7 +56,9 @@ public class NewBehaviourScript : Agent
 
     public Vector2 pivotPoint = Vector2.zero;
     public float range = 5.0f;
-    public float angle = 70.0f;
+    public float angle = 45.0f;
+    public  float angleLeft = 45.0f;
+
     private Vector2 startPoint = Vector2.zero;
 
     public void Awake()
@@ -120,6 +122,7 @@ public class NewBehaviourScript : Agent
         controlSignal.y = vectorAction[1];
 
         bulletDirection();
+        GroundcheckLeft();
         Groundcheck();
         Falling();
         autoshoot();
@@ -163,8 +166,6 @@ public class NewBehaviourScript : Agent
 
         //rigidbody.AddForce(controlSignal.x * forceMultiplier, ForceMode2D.Force);
        transform.position += new Vector3(controlSignal.x, 0, 0) * Time.deltaTime * MoveMentSpeed;
-        
-         
        
 
         if (controlSignal.x > 0.01)
@@ -234,21 +235,79 @@ public class NewBehaviourScript : Agent
         }
         void Groundcheck()
         {
+            int layerMask = ~(LayerMask.GetMask("tosin"));
             startPoint = transform.position + Vector3.right; // Update starting ray point.
 
             // Direct use.
             // Get normalized (of length = 1) distance vector.
-            // Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized; 
+             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
 
             // Using function.
-            Vector2 direction = GetDirectionVector2D(angle);
+            // Vector2 direction = GetDirectionVector2D(angle);
+            RaycastHit2D groundEnd;
 
-            Physics2D.Raycast(startPoint, direction, range); // Shot ray.
+             groundEnd = Physics2D.Raycast(startPoint, direction, range, layerMask); // Shot ray.
+
+
+            if(groundEnd.collider != null)
+            {
+                Debug.Log("RayCast: " + groundEnd.collider.gameObject.layer.ToString());
+
+                switch (groundEnd.collider.gameObject.layer)
+
+                {
+                    case 11:
+                        vectorAction[1] = 1;
+                        Debug.Log("testing");
+                    break;
+
+                    default:
+                        break;
+                }
+            }
 
             // Draw ray. For Debug we have to multiply our direction vector. 
             // Even if there is said Debug.DrawRay(start, dir), not Debug.DrawRay(start, end). Keep that in mind.
             Debug.DrawRay(startPoint, direction * range, Color.yellow);
+        }
+        void GroundcheckLeft()
+        {
+           
+            int layerMask = ~(LayerMask.GetMask("tosin"));
+            startPoint = transform.position + Vector3.left; // Update starting ray point.
 
+            // Direct use.
+            // Get normalized (of length = 1) distance vector.
+            Vector2 direction = new Vector2(Mathf.Cos(angleLeft * Mathf.Deg2Rad), Mathf.Sin(angleLeft * Mathf.Deg2Rad)).normalized;
+
+            // Using function.
+            // Vector2 direction = GetDirectionVector2D(angle);
+            RaycastHit2D groundEnd;
+
+            groundEnd = Physics2D.Raycast(startPoint, direction, range, layerMask); // Shot ray.
+
+
+            if (groundEnd.collider != null && isFacingLeft == false)
+            {
+                Debug.Log("RayCast: " + groundEnd.collider.gameObject.layer.ToString());
+
+                switch (groundEnd.collider.gameObject.layer)
+
+                {
+                    case 11:
+                        jumpleft = true;
+                        vectorAction[1] = 2;
+                        Debug.Log("testing");
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            // Draw ray. For Debug we have to multiply our direction vector. 
+            // Even if there is said Debug.DrawRay(start, dir), not Debug.DrawRay(start, end). Keep that in mind.
+            Debug.DrawRay(startPoint, direction * range, Color.green);
         }
         void jumpingleft()
         {
@@ -260,24 +319,23 @@ public class NewBehaviourScript : Agent
                 jumpleft = true;
                 if (hit2.collider.gameObject.CompareTag("Obstacle") && isFacingLeft == false)
                 {
-
                     vectorAction[1] = 2;
                 }
             }
             else
             {
                 Debug.DrawLine(transform.position, endpos2, Color.red);
-
             }
         }
         
 
     }
-
+    /*
     public Vector2 GetDirectionVector2D(float angle)
     {
-        return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(-angle * Mathf.Deg2Rad)).normalized;
+        return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
     }
+    */
     public void Falling()
     {
         if (transform.position.y < -8)
