@@ -13,6 +13,7 @@ TagManager:
   - wallReward
   - empty-space
   - test
+  - start
   layers:
   - Default
   - TransparentFX

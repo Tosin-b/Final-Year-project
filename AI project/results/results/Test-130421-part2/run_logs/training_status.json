@@ -1,0 +1,23 @@
+{
+    "Test-130421-part2": {
+        "checkpoints": [
+            {
+                "steps": 222679,
+                "file_path": "results\\Test-130421-part2\\Test-130421-part2\\Test-130421-part2-222679.onnx",
+                "reward": 0.3333334078391393,
+                "creation_time": 1618357053.8268945
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 222679,
+            "file_path": "results\\Test-130421-part2\\Test-130421-part2.onnx",
+            "reward": 0.3333334078391393,
+            "creation_time": 1618357053.8268945
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.24.1",
+        "torch_version": "1.7.1+cpu"
+    }
+}

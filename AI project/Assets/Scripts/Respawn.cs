@@ -18,7 +18,7 @@ public class Respawn : MonoBehaviour
     void Update()
     {
         Startover();
-        falloff();
+        //falloff();
     }
 
     private void Startover()
@@ -36,5 +36,9 @@ public class Respawn : MonoBehaviour
             Debug.Log("testing respawn");
 
         }
+    }
+    public void Startagain()
+    {
+        SceneManager.LoadScene(respawn);
     }
 }

@@ -59,6 +59,8 @@ public class NewBehaviourScript : Agent
     public float angle = 45.0f;
     public  float angleLeft = 45.0f;
 
+    bool wall;
+
     private Vector2 startPoint = Vector2.zero;
 
     public void Awake()
@@ -71,13 +73,26 @@ public class NewBehaviourScript : Agent
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
+    
     public override void OnEpisodeBegin()
     {
-        if (transform.position.y < -8)
+        Debug.Log(wall);
+        Debug.Log("am i falling test ogdnjb");
+        if (this.transform.position.x < -10)
+        {
+            wall = false;
+            Debug.Log("your in");
+            respawn.Startagain();
+            Debug.Log("tesintg your player can now reset afet hitting a wall");
+
+        }
+        if (this.transform.position.y < -8)
         {
             Debug.Log("am i falling test");
-            respawn.falloff();
-            EndEpisode();
+            //ndEpisode();
+            respawn.Startagain();
+            Debug.Log("tesintg your player can now reset afet falling");
+
         }
     }
     public override void CollectObservations(VectorSensor sensor)
@@ -101,12 +116,12 @@ public class NewBehaviourScript : Agent
         if (currentPosition.x > previousPosition.x)
         {
            // Debug.Log("Well done you are progressing  :)" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
-            AddReward(0.2f);
+            AddReward(0.001f);
         }
         else if (currentPosition.x < previousPosition.x)
         {
             //Debug.Log("You are going backwards o_o" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
-            AddReward(-0.4f);
+            AddReward(-0.002f);
            //RequestDecision();
 
         }
@@ -129,9 +144,10 @@ public class NewBehaviourScript : Agent
         bulletDirection();
         GroundcheckLeft();
         Groundcheck();
-        //Falling();
+        PlayerHitwall();
+        Falling();
         autoshoot();
-        jumpingleft();
+        //jumpingleft();
         jumpRigth();
         //isJumping();
         //Debug.Log(" controlSignal.y = " + controlSignal.y);
@@ -256,7 +272,7 @@ public class NewBehaviourScript : Agent
 
             if(groundEnd.collider != null)
             {
-                Debug.Log("RayCast: " + groundEnd.collider.gameObject.layer.ToString());
+               // Debug.Log("RayCast: " + groundEnd.collider.gameObject.layer.ToString());
 
                 switch (groundEnd.collider.gameObject.layer)
 
@@ -294,7 +310,7 @@ public class NewBehaviourScript : Agent
 
             if (groundEnd.collider != null && isFacingLeft == false)
             {
-                Debug.Log("RayCast: " + groundEnd.collider.gameObject.layer.ToString());
+               // Debug.Log("RayCast: " + groundEnd.collider.gameObject.layer.ToString());
 
                 switch (groundEnd.collider.gameObject.layer)
 
@@ -340,9 +356,22 @@ public class NewBehaviourScript : Agent
         return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
     }
     */
+    public void PlayerHitwall()
+    {
+        if(gameObject.CompareTag("start"))
+        {
+            Debug.Log("wall hit !!!!");
+            EndEpisode();
+        }
+    }
     public void Falling()
     {
-       
+        if (this.transform.position.y < -8)
+        {
+            EndEpisode();
+        }
+
+
     }
 
   
@@ -372,7 +401,7 @@ public class NewBehaviourScript : Agent
     public void shootBullet()
     {
         animator.Play("Shoot");
-        GameObject b = Instantiate(bulletPrefabs);
+        GameObject b = Instantiate(bulletPrefabs); 
         b.GetComponent<Bullet>().StartShoot(isFacingLeft);
         b.transform.position = bulletSpawnpos.transform.position;
     }
@@ -382,11 +411,10 @@ public class NewBehaviourScript : Agent
         Procces(collision.gameObject);
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("wel done");
-        }
-         if (collision.gameObject.CompareTag("wallReward"))
-        {
-            Debug.Log("nice u hit the wall ------------");
+            Debug.Log("oof you hit the head");
+            AddReward(-0.0002f);
+           
+            //respawn.Startagain();
         }
     }
 
@@ -400,8 +428,8 @@ public class NewBehaviourScript : Agent
             Player_health = Player_health - hurt;
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
             animator.Play("hurt");
-            AddReward(-0.5f);
-            EndEpisode();
+            AddReward(-1.0f);
+           
 
         }
     }
@@ -410,7 +438,15 @@ public class NewBehaviourScript : Agent
     {
         if(collision.gameObject.CompareTag("wallReward"))
         {
-            Debug.Log("you hit the reward");
+            Debug.Log("you hit the reward"); 
+            AddReward(0.1f);
+        }
+        else if (collision.gameObject.CompareTag("start"))
+        {
+            Debug.Log("coooooooooooooooool");
+            wall = true;
+            Debug.Log(wall);
+            EndEpisode();
         }
     }
 
