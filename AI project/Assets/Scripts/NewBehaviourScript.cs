@@ -53,6 +53,7 @@ public class NewBehaviourScript : Agent
 
    
     public bool jumpingFlag = false;
+    bool endgame;
 
     public Vector2 pivotPoint = Vector2.zero;
     public float range = 5.0f;
@@ -76,17 +77,31 @@ public class NewBehaviourScript : Agent
     
     public override void OnEpisodeBegin()
     {
-        Debug.Log(wall);
-        Debug.Log("am i falling test ogdnjb");
-        if (this.transform.position.x < -10)
+        Debug.Log(endgame);
+        if (endgame)
+        {
+            endgame = false;
+            Debug.Log("Entered the loop");
+            Debug.Log(endgame);
+            respawn.Startagain();
+        }
+       
+        if (Player_health == 0)
+        {
+            respawn.Startagain();
+            Debug.Log("");
+        }
+
+        else if (this.transform.position.x < -10)
         {
             wall = false;
             Debug.Log("your in");
             respawn.Startagain();
             Debug.Log("tesintg your player can now reset afet hitting a wall");
-
         }
-        if (this.transform.position.y < -8)
+       
+
+        else if (this.transform.position.y < -8)
         {
             Debug.Log("am i falling test");
             //ndEpisode();
@@ -109,6 +124,7 @@ public class NewBehaviourScript : Agent
     }
     public void Update()
     {
+        //Debug.Log(transform.position.x);
         currentPosition = transform.position;
         // Debug.Log("Current position: " + currentPosition);
         // Debug.Log("Previous Position: " + previousPosition);
@@ -144,9 +160,10 @@ public class NewBehaviourScript : Agent
         bulletDirection();
         GroundcheckLeft();
         Groundcheck();
-        PlayerHitwall();
         Falling();
+        LeftRight();
         autoshoot();
+        autoshooLeft();
         //jumpingleft();
         jumpRigth();
         //isJumping();
@@ -356,18 +373,12 @@ public class NewBehaviourScript : Agent
         return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
     }
     */
-    public void PlayerHitwall()
-    {
-        if(gameObject.CompareTag("start"))
-        {
-            Debug.Log("wall hit !!!!");
-            EndEpisode();
-        }
-    }
+   
     public void Falling()
     {
         if (this.transform.position.y < -8)
         {
+            AddReward(-1.0f);
             EndEpisode();
         }
 
@@ -387,8 +398,8 @@ public class NewBehaviourScript : Agent
 
                 shootingTime = Time.time;
                 shootBullet();
-                //sets a reward
-                AddReward(1.0f);
+                //Shooting Right
+                AddReward(0.5f);
             }
             
         }
@@ -397,6 +408,38 @@ public class NewBehaviourScript : Agent
             Debug.DrawLine(transform.position, endpos, Color.black);
         }
     }
+    public void autoshooLeft()
+    {
+
+        Vector2 endpos4 = transform.position + Vector3.left * castDistnce;
+        RaycastHit2D hit4 = Physics2D.Linecast(transform.position, endpos4, 1 << LayerMask.NameToLayer("Action"));
+        if (hit4.collider != null)
+        {
+            if (hit4.collider.gameObject.CompareTag("enemy") && Time.time > shootingTime + firerate)
+            {
+
+                shootingTime = Time.time;
+                shootBullet();
+                //sets a reward
+                //Shooting Right
+                AddReward(0.5f);
+            }
+
+        }
+        else
+        {
+            Debug.DrawLine(transform.position, endpos4, Color.black);
+        }
+    }
+    public void healthReset()
+    {
+        if (Player_health == 0)
+        {
+            AddReward(-1.0f);
+            EndEpisode();
+        }
+    }
+
 
     public void shootBullet()
     {
@@ -428,7 +471,7 @@ public class NewBehaviourScript : Agent
             Player_health = Player_health - hurt;
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
             animator.Play("hurt");
-            AddReward(-1.0f);
+            AddReward(-0.2f);
            
 
         }
@@ -441,11 +484,20 @@ public class NewBehaviourScript : Agent
             Debug.Log("you hit the reward"); 
             AddReward(0.1f);
         }
+        //this part works reminder to delte the other function playerrhitwall
         else if (collision.gameObject.CompareTag("start"))
         {
             Debug.Log("coooooooooooooooool");
             wall = true;
             Debug.Log(wall);
+            AddReward(-1.0f);
+            EndEpisode();
+        }
+        else if(collision.gameObject.CompareTag("end"))
+        {
+            AddReward(1.0f);
+            Debug.Log("i have fineshed the game");
+            endgame = true;
             EndEpisode();
         }
     }
