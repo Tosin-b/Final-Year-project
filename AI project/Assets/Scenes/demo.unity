@@ -2221,13 +2221,14 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 20000
   Jumpforce: 14
   MoveMentSpeed: 8
   bulletPrefabs: {fileID: 1405665921}
   castDistnce: 4
   castDistnce1: 2
   agrorange: 4
+  castDistnce1Left: 2
   animator: {fileID: 489900849}
   bulletSpawnpos: {fileID: 1406394706}
   Player_health: 10
@@ -2288,9 +2289,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 6983e23a8a960da4597a3ee4c005ca7d, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: self-play
   TeamId: 0
   m_UseChildSensors: 1
@@ -13546,7 +13547,7 @@ PrefabInstance:
     - target: {fileID: 486379996847331694, guid: d05c424c65a1e644a882f8981d37bed9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.05
+      value: -1.195
       objectReference: {fileID: 0}
     - target: {fileID: 486379996847331694, guid: d05c424c65a1e644a882f8981d37bed9,
         type: 3}
@@ -13592,6 +13593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486379996847331694, guid: d05c424c65a1e644a882f8981d37bed9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.776453
       objectReference: {fileID: 0}
     - target: {fileID: 1239097098882570721, guid: d05c424c65a1e644a882f8981d37bed9,
         type: 3}

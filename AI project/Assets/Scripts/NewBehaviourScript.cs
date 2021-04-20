@@ -31,6 +31,9 @@ public class NewBehaviourScript : Agent
     [SerializeField]
     float agrorange;
 
+    [SerializeField]
+    float castDistnce1Left;
+
     private Rigidbody2D rigidbody;
     public Animator animator;
     private bool IsShhoting;
@@ -86,10 +89,10 @@ public class NewBehaviourScript : Agent
             respawn.Startagain();
         }
        
-        if (Player_health == 0)
+        if (Player_health <= 0)
         {
             respawn.Startagain();
-            Debug.Log("");
+            Debug.Log("sStart again");
         }
 
         else if (this.transform.position.x < -10)
@@ -164,7 +167,8 @@ public class NewBehaviourScript : Agent
         LeftRight();
         autoshoot();
         autoshooLeft();
-        //jumpingleft();
+        healthReset();
+        jumpingleft();
         jumpRigth();
         //isJumping();
         //Debug.Log(" controlSignal.y = " + controlSignal.y);
@@ -349,7 +353,7 @@ public class NewBehaviourScript : Agent
         void jumpingleft()
         {
 
-            Vector2 endpos2 = transform.position + Vector3.left * castDistnce1;
+            Vector2 endpos2 = transform.position + Vector3.left * castDistnce1Left;
             RaycastHit2D hit2 = Physics2D.Linecast(transform.position, endpos2, 1 << LayerMask.NameToLayer("Obstacle"));
             if (hit2.collider != null)
             {
@@ -393,7 +397,7 @@ public class NewBehaviourScript : Agent
         RaycastHit2D hit = Physics2D.Linecast(transform.position, endpos, 1 << LayerMask.NameToLayer("Action"));
         if (hit.collider != null)
         {
-            if (hit.collider.gameObject.CompareTag("enemy") && Time.time > shootingTime + firerate)
+            if (hit.collider.gameObject.CompareTag("enemy") && Time.time > shootingTime + firerate && isFacingLeft== true)
             {
 
                 shootingTime = Time.time;
@@ -415,7 +419,7 @@ public class NewBehaviourScript : Agent
         RaycastHit2D hit4 = Physics2D.Linecast(transform.position, endpos4, 1 << LayerMask.NameToLayer("Action"));
         if (hit4.collider != null)
         {
-            if (hit4.collider.gameObject.CompareTag("enemy") && Time.time > shootingTime + firerate)
+            if (hit4.collider.gameObject.CompareTag("enemy") && Time.time > shootingTime + firerate && isFacingLeft == false)
             {
 
                 shootingTime = Time.time;
@@ -433,7 +437,7 @@ public class NewBehaviourScript : Agent
     }
     public void healthReset()
     {
-        if (Player_health == 0)
+        if (Player_health <= 0)
         {
             AddReward(-1.0f);
             EndEpisode();
@@ -470,7 +474,7 @@ public class NewBehaviourScript : Agent
             float hurt = 2f;
             Player_health = Player_health - hurt;
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
-            animator.Play("hurt");
+            //animator.Play("hurt");
             AddReward(-0.2f);
            
 
