@@ -83,7 +83,7 @@ public class EnenyScript : MonoBehaviour
         }
     }
     
-    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -118,6 +118,7 @@ public class EnenyScript : MonoBehaviour
         GameObject explosionn = (GameObject)Instantiate(explosionref);
         explosionn.transform.position = new Vector3(transform.position.x, transform.position.y + .3f, transform.position.z);
         Destroy(gameObject);
+        scoreManager.instance.Addscore();
 
     }
 

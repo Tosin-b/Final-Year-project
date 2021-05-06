@@ -114,6 +114,7 @@ public class Octupus : MonoBehaviour
         GameObject explosionn = (GameObject)Instantiate(explosionref);
         explosionn.transform.position = new Vector3(transform.position.x, transform.position.y + .3f, transform.position.z);
         Destroy(gameObject);
+        scoreManager.instance.Addscore();
 
     }
 

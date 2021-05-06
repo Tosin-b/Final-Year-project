@@ -113,15 +113,21 @@ public class NewBehaviourScript : Agent
 
         }
     }
+    
     public override void CollectObservations(VectorSensor sensor)
     {
         Vector2 endpos = transform.position + Vector3.right * castDistnce;
         RaycastHit2D hit = Physics2D.Linecast(transform.position, endpos, 1 << LayerMask.NameToLayer("Action"));
+        Vector2 health = new Vector2(Player_health, 12);
+        
+        Debug.Log("Scaled health:  " + health.magnitude);
+
 
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(hit);
         sensor.AddObservation(transform.position.x);
         sensor.AddObservation(transform.position.y);
+        //sensor.AddObservation(Player_health);
 
 
     }
@@ -135,12 +141,12 @@ public class NewBehaviourScript : Agent
         if (currentPosition.x > previousPosition.x)
         {
            // Debug.Log("Well done you are progressing  :)" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
-            AddReward(0.001f);
+            AddReward(0.0001f);
         }
         else if (currentPosition.x < previousPosition.x)
         {
             //Debug.Log("You are going backwards o_o" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
-            AddReward(-0.002f);
+            AddReward(-0.0002f);
            //RequestDecision();
 
         }
@@ -153,6 +159,7 @@ public class NewBehaviourScript : Agent
     public float forceMultiplier = 25;
     public override void OnActionReceived(float[] vectorAction)
     {
+       
 
         bool jumpleft = false;
         Vector3 controlSignal = Vector3.zero;
@@ -184,6 +191,7 @@ public class NewBehaviourScript : Agent
         }
          else if (vectorAction[1] == 2 && Mathf.Abs(rigidbody.velocity.y) < 0.001f && jumpleft == true)
         {
+           
             animator.SetTrigger("isjumping");
             rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
             rigidbody.AddForce(new Vector2(-8f, 0), ForceMode2D.Impulse);
@@ -382,7 +390,7 @@ public class NewBehaviourScript : Agent
     {
         if (this.transform.position.y < -8)
         {
-            AddReward(-1.0f);
+            AddReward(-0.01f);
             EndEpisode();
         }
 
@@ -403,7 +411,7 @@ public class NewBehaviourScript : Agent
                 shootingTime = Time.time;
                 shootBullet();
                 //Shooting Right
-                AddReward(0.5f);
+                AddReward(0.012f);
             }
             
         }
@@ -426,7 +434,7 @@ public class NewBehaviourScript : Agent
                 shootBullet();
                 //sets a reward
                 //Shooting Right
-                AddReward(0.5f);
+                AddReward(0.012f);
             }
 
         }
@@ -439,7 +447,7 @@ public class NewBehaviourScript : Agent
     {
         if (Player_health <= 0)
         {
-            AddReward(-1.0f);
+            AddReward(-0.01f);
             EndEpisode();
         }
     }
@@ -475,7 +483,7 @@ public class NewBehaviourScript : Agent
             Player_health = Player_health - hurt;
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
             //animator.Play("hurt");
-            AddReward(-0.2f);
+            AddReward(-0.002f);
            
 
         }
@@ -486,7 +494,7 @@ public class NewBehaviourScript : Agent
         if(collision.gameObject.CompareTag("wallReward"))
         {
             Debug.Log("you hit the reward"); 
-            AddReward(0.1f);
+            AddReward(0.001f);
         }
         //this part works reminder to delte the other function playerrhitwall
         else if (collision.gameObject.CompareTag("start"))
@@ -494,14 +502,22 @@ public class NewBehaviourScript : Agent
             Debug.Log("coooooooooooooooool");
             wall = true;
             Debug.Log(wall);
-            AddReward(-1.0f);
+            AddReward(-0.001f);
             EndEpisode();
         }
         else if(collision.gameObject.CompareTag("end"))
         {
-            AddReward(1.0f);
+            AddReward(0.1f);
             Debug.Log("i have fineshed the game");
             endgame = true;
+            if(Player_health >= 5)
+            {
+                AddReward(0.01f);
+            }
+            else
+            {
+                AddReward(-0.03f);
+            }
             EndEpisode();
         }
     }
