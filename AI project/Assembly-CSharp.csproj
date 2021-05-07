@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Octupus.cs" />
     <Compile Include="Assets\Scripts\Respawn.cs" />
+    <Compile Include="Assets\Scripts\Scorebonus.cs" />
     <Compile Include="Assets\Scripts\invis.cs" />
     <Compile Include="Assets\Scripts\levelModifierScript.cs" />
     <Compile Include="Assets\Scripts\levelUp.cs" />

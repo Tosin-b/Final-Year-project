@@ -23,12 +23,12 @@ public class levelUp : MonoBehaviour
     public  void LevelDecrement()
     {
         currentGameLevel.text = "LEVEL: " + levelIncrement.ToString();
-        levelIncrement -= 1;
-        if (levelIncrement < 1)
-        {
-            levelIncrement = 1;
-            currentGameLevel.text = "LEVEL: " + levelIncrement.ToString();
-        }
+        levelIncrement = 1;
+        //if (levelIncrement < 1)
+        //{
+        //    levelIncrement = 1;
+        //    currentGameLevel.text = "LEVEL: " + levelIncrement.ToString();
+        //}
 
 
     }

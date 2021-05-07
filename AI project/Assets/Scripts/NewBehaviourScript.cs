@@ -93,17 +93,20 @@ public class NewBehaviourScript : Agent
         {
             endgame = false;
             respawn.Startagain();
+            level.LevelingUp();
             Debug.Log(levelModifierScript.moveSpeedModifier + " moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + " enemyDamageModifier");
-            level.LevelingUp();
+            
         }
        
        else if (Player_health <= 0)
         {
             respawn.again();
+            levelModifierScript.DecreaseModifier();
+            level.LevelDecrement();
             Debug.Log(levelModifierScript.moveSpeedModifier + " moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + " enemyDamageModifier");
-            level.LevelDecrement();
+            
         }
 
         else if (this.transform.position.x < -10)
@@ -112,20 +115,21 @@ public class NewBehaviourScript : Agent
             //Debug.Log("your in");
             respawn.again();
             levelModifierScript.DecreaseModifier();
+            level.LevelDecrement();
             Debug.Log(levelModifierScript.moveSpeedModifier + "moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + "enemyDamageModifier");
-            level.LevelDecrement();
+            
         }
        
         else if (this.transform.position.y < -8)
         {
-            Debug.Log("am i falling test");
-            //ndEpisode();
-            levelModifierScript.DecreaseModifier();
+            // Debug.Log("am i falling test");
             respawn.again();
+            levelModifierScript.DecreaseModifier();
+            level.LevelDecrement();
             Debug.Log(levelModifierScript.moveSpeedModifier + "moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + "enemyDamageModifier");
-            level.LevelDecrement();
+         
         }
     }
     

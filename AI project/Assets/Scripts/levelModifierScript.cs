@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class levelModifierScript : MonoBehaviour
 {
     public int power;
-    public static int moveSpeedModifier;
-    public static int enemyDamageModifier;
+    public static int moveSpeedModifier =0;
+    public static int enemyDamageModifier=0;
 
 
-
+    //public int highestCurrentLevel = ;
 
     public static void IncreaseModifier()
     {
@@ -24,5 +24,9 @@ public class levelModifierScript : MonoBehaviour
     {
         moveSpeedModifier =0;
         enemyDamageModifier =0;
+    }
+    public void NextLevel()
+    {
+       // PlayerPrefs.SetInt()
     }
 }
