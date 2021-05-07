@@ -40,5 +40,12 @@ public class Respawn : MonoBehaviour
     public void Startagain()
     {
         SceneManager.LoadScene(respawn);
+        levelModifierScript.IncreaseModifier();
+
+
+    }
+    public void again()
+    {
+        SceneManager.LoadScene(respawn);
     }
 }

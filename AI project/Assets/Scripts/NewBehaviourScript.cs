@@ -16,11 +16,13 @@ public class NewBehaviourScript : Agent
     [SerializeField]
     public GameObject bulletPrefabs;
 
-   // [SerializeField]
+    // [SerializeField]
     //Transform enemy;
 
     //[SerializeField]
     //GameObject checkingEnemyTag;
+    [SerializeField]
+    scoreManager Player_points;
 
     [SerializeField]
     float castDistnce;
@@ -34,8 +36,13 @@ public class NewBehaviourScript : Agent
     [SerializeField]
     float castDistnce1Left;
 
+    [SerializeField]
+    levelUp level;
+
     private Rigidbody2D rigidbody;
+
     public Animator animator;
+
     private bool IsShhoting;
 
     [SerializeField]
@@ -76,58 +83,68 @@ public class NewBehaviourScript : Agent
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        Player_points = FindObjectOfType<scoreManager>();
     }
     
     public override void OnEpisodeBegin()
     {
-        Debug.Log(endgame);
+        //Debug.Log(endgame);
         if (endgame)
         {
             endgame = false;
-            Debug.Log("Entered the loop");
-            Debug.Log(endgame);
             respawn.Startagain();
+            Debug.Log(levelModifierScript.moveSpeedModifier + " moveSpeedModifier");
+            Debug.Log(levelModifierScript.enemyDamageModifier + " enemyDamageModifier");
+            level.LevelingUp();
         }
        
-        if (Player_health <= 0)
+       else if (Player_health <= 0)
         {
-            respawn.Startagain();
-            Debug.Log("sStart again");
+            respawn.again();
+            Debug.Log(levelModifierScript.moveSpeedModifier + " moveSpeedModifier");
+            Debug.Log(levelModifierScript.enemyDamageModifier + " enemyDamageModifier");
+            level.LevelDecrement();
         }
 
         else if (this.transform.position.x < -10)
         {
             wall = false;
-            Debug.Log("your in");
-            respawn.Startagain();
-            Debug.Log("tesintg your player can now reset afet hitting a wall");
+            //Debug.Log("your in");
+            respawn.again();
+            levelModifierScript.DecreaseModifier();
+            Debug.Log(levelModifierScript.moveSpeedModifier + "moveSpeedModifier");
+            Debug.Log(levelModifierScript.enemyDamageModifier + "enemyDamageModifier");
+            level.LevelDecrement();
         }
        
-
         else if (this.transform.position.y < -8)
         {
             Debug.Log("am i falling test");
             //ndEpisode();
-            respawn.Startagain();
-            Debug.Log("tesintg your player can now reset afet falling");
-
+            levelModifierScript.DecreaseModifier();
+            respawn.again();
+            Debug.Log(levelModifierScript.moveSpeedModifier + "moveSpeedModifier");
+            Debug.Log(levelModifierScript.enemyDamageModifier + "enemyDamageModifier");
+            level.LevelDecrement();
         }
     }
     
     public override void CollectObservations(VectorSensor sensor)
     {
+        int observ_player_score = Player_points.score;
         Vector2 endpos = transform.position + Vector3.right * castDistnce;
         RaycastHit2D hit = Physics2D.Linecast(transform.position, endpos, 1 << LayerMask.NameToLayer("Action"));
         Vector2 health = new Vector2(Player_health, 12);
         
-        Debug.Log("Scaled health:  " + health.magnitude);
+        //Debug.Log("Scaled health:  " + health.magnitude);
 
 
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(hit);
         sensor.AddObservation(transform.position.x);
         sensor.AddObservation(transform.position.y);
-        //sensor.AddObservation(Player_health);
+        sensor.AddObservation(Player_health);
+        sensor.AddObservation(observ_player_score);
 
 
     }
@@ -186,7 +203,7 @@ public class NewBehaviourScript : Agent
             animator.SetTrigger("isjumping");
             rigidbody.AddForce(new Vector2(0, Jumpforce), ForceMode2D.Impulse);
             rigidbody.AddForce(new Vector2(8f, 0), ForceMode2D.Impulse);
-            Debug.Log("Rigth jump is working fine");
+            //Debug.Log("Rigth jump is working fine");
             
         }
          else if (vectorAction[1] == 2 && Mathf.Abs(rigidbody.velocity.y) < 0.001f && jumpleft == true)
@@ -197,7 +214,7 @@ public class NewBehaviourScript : Agent
             rigidbody.AddForce(new Vector2(-8f, 0), ForceMode2D.Impulse);
             jumpleft = false;
             vectorAction[1] = 0;
-            Debug.Log("left jumping is workig fine toon");
+            //Debug.Log("left jumping is workig fine toon");
            
         }
         void LeftRight()
@@ -466,7 +483,7 @@ public class NewBehaviourScript : Agent
         Procces(collision.gameObject);
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("oof you hit the head");
+           // Debug.Log("oof you hit the head");
             AddReward(-0.0002f);
            
             //respawn.Startagain();
@@ -480,7 +497,7 @@ public class NewBehaviourScript : Agent
         {
 
             float hurt = 2f;
-            Player_health = Player_health - hurt;
+            Player_health = Player_health - hurt- levelModifierScript.enemyDamageModifier;
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
             //animator.Play("hurt");
             AddReward(-0.002f);
@@ -493,22 +510,22 @@ public class NewBehaviourScript : Agent
     {
         if(collision.gameObject.CompareTag("wallReward"))
         {
-            Debug.Log("you hit the reward"); 
+           // Debug.Log("you hit the reward"); 
             AddReward(0.001f);
         }
         //this part works reminder to delte the other function playerrhitwall
         else if (collision.gameObject.CompareTag("start"))
         {
-            Debug.Log("coooooooooooooooool");
+          //  Debug.Log("coooooooooooooooool");
             wall = true;
-            Debug.Log(wall);
+          //  Debug.Log(wall);
             AddReward(-0.001f);
             EndEpisode();
         }
         else if(collision.gameObject.CompareTag("end"))
         {
             AddReward(0.1f);
-            Debug.Log("i have fineshed the game");
+            //Debug.Log("i have fineshed the game");
             endgame = true;
             if(Player_health >= 5)
             {

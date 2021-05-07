@@ -63,14 +63,15 @@ public class EnemyJumper : MonoBehaviour
         if (transform.position.x < player.position.x)
         {
            // animator.SetFloat("run-crab", Mathf.Abs(transform.position.x));
-            rb.velocity = new Vector2(movespeed, 0);
+            rb.velocity = new Vector2(movespeed +levelModifierScript.moveSpeedModifier, 0);
             transform.localScale = new Vector2(-1, 1);
 
         }
         else if (transform.position.x > player.position.x)
         {
            // animator.SetFloat("run-crab", Mathf.Abs(transform.position.x));
-            rb.velocity = new Vector2(-movespeed, 0);
+            rb.velocity = new Vector2(-movespeed - levelModifierScript.moveSpeedModifier
+             , 0);
             transform.localScale = new Vector2(1, 1);
 
         }

@@ -15,7 +15,7 @@ public class invis : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(this.gameObject);
-            Debug.Log("Object has been destroyed");
+            //Debug.Log("Object has been destroyed");
         }
     }
 

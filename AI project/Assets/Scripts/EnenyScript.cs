@@ -9,10 +9,10 @@ public class EnenyScript : MonoBehaviour
     Transform player;
 
     [SerializeField]
-    float agrorange =7;
+    float agrorange = 7;
 
     [SerializeField]
-    float movespeed = 5;
+     float  movespeed = 5;
 
     [SerializeField]
     Transform Bullet;
@@ -70,14 +70,14 @@ public class EnenyScript : MonoBehaviour
         if (transform.position.x < player.position.x)
         {
             animator.SetFloat("run-crab",Mathf.Abs(transform.position.x));
-            rb.velocity = new Vector2(movespeed, 0);
+            rb.velocity = new Vector2(movespeed +levelModifierScript.moveSpeedModifier, 0);
             transform.localScale = new Vector2(-1, 1);
             
         }
         else if (transform.position.x > player.position.x)
         {
             animator.SetFloat("run-crab",Mathf.Abs(transform.position.x));
-            rb.velocity = new Vector2(-movespeed, 0);
+            rb.velocity = new Vector2(-movespeed -levelModifierScript.moveSpeedModifier, 0);
             transform.localScale = new Vector2(1, 1);
 
         }

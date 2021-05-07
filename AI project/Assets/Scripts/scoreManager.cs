@@ -10,7 +10,7 @@ public class scoreManager : MonoBehaviour
 
     public Text currentScoreText;
     public Text HighScoreText;
-    int score = 0;
+   public int score = 0;
     int highScore = 0;
     private void Awake()
     {

@@ -1092,6 +1092,7 @@ RectTransform:
   - {fileID: 229027854}
   - {fileID: 996581080}
   - {fileID: 870959320}
+  - {fileID: 784187918}
   m_Father: {fileID: 0}
   m_RootOrder: 80
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2068,6 +2069,8 @@ GameObject:
   - component: {fileID: 489900853}
   - component: {fileID: 489900852}
   - component: {fileID: 489900854}
+  - component: {fileID: 489900855}
+  - component: {fileID: 489900856}
   m_Layer: 0
   m_Name: player-idle-1
   m_TagString: Player
@@ -2133,7 +2136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489900844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.8, y: -0, z: 0}
+  m_LocalPosition: {x: 181.13, y: 0.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 808734241}
@@ -2227,10 +2230,12 @@ MonoBehaviour:
   Jumpforce: 14
   MoveMentSpeed: 8
   bulletPrefabs: {fileID: 1405665921}
+  Player_points: {fileID: 489900855}
   castDistnce: 4
   castDistnce1: 2
   agrorange: 4
   castDistnce1Left: 2
+  level: {fileID: 489900856}
   animator: {fileID: 489900849}
   bulletSpawnpos: {fileID: 1406394706}
   Player_health: 10
@@ -2282,18 +2287,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 14
+    VectorObservationSize: 10
     NumStackedVectorObservations: 1
     m_ActionSpec:
-      m_NumContinuousActions: 4
+      m_NumContinuousActions: 6
       BranchSizes: 
-    VectorActionSize: 04000000
+    VectorActionSize: 06000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 6983e23a8a960da4597a3ee4c005ca7d, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: self-play
   TeamId: 0
   m_UseChildSensors: 1
@@ -2315,6 +2320,34 @@ CircleCollider2D:
   m_Offset: {x: 0.85281813, y: -1.0162597}
   serializedVersion: 2
   m_Radius: 0.5569464
+--- !u!114 &489900855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489900844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c326f0476678f0042b7b67be4b9a0887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScoreText: {fileID: 996581081}
+  HighScoreText: {fileID: 870959321}
+  score: 0
+--- !u!114 &489900856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489900844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e41b78e8d2de8a4794b2cdb97714911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGameLevel: {fileID: 784187919}
 --- !u!1001 &493879245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2915,12 +2948,12 @@ PrefabInstance:
     - target: {fileID: 7840108695012911205, guid: 1a9ea958edf5af841b2710d4b2d1a1f7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46.1
+      value: 44.47
       objectReference: {fileID: 0}
     - target: {fileID: 7840108695012911205, guid: 1a9ea958edf5af841b2710d4b2d1a1f7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.51
+      value: -0.12
       objectReference: {fileID: 0}
     - target: {fileID: 7840108695012911205, guid: 1a9ea958edf5af841b2710d4b2d1a1f7,
         type: 3}
@@ -3157,6 +3190,84 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 489900846}
+--- !u!1 &784187917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 784187918}
+  - component: {fileID: 784187920}
+  - component: {fileID: 784187919}
+  m_Layer: 5
+  m_Name: Level
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &784187918
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784187917}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 226933850}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 140.7, y: 43.1}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &784187919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784187917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.16660735, g: 0.9056604, b: 0.24111538, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 8a2b9e2a607dd2143b58c44bc32410b4, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'level: '
+--- !u!222 &784187920
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784187917}
+  m_CullTransparentMesh: 0
 --- !u!1 &808734240
 GameObject:
   m_ObjectHideFlags: 0
@@ -3379,6 +3490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentScoreText: {fileID: 996581081}
   HighScoreText: {fileID: 870959321}
+  score: 0
 --- !u!1 &876951003
 GameObject:
   m_ObjectHideFlags: 0
@@ -11534,7 +11646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 489900846}
   agrorange: 8
-  movespeed: 2
+  movespeed: 5
   Bullet: {fileID: 1405665922}
   animator: {fileID: 0}
   health: 3
@@ -13801,6 +13913,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2732695945617797703, guid: 739d31fca0c32504a84296614c94f751,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732695945617797703, guid: 739d31fca0c32504a84296614c94f751,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27505884
+      objectReference: {fileID: 0}
     - target: {fileID: 4118649852508395104, guid: 739d31fca0c32504a84296614c94f751,
         type: 3}
       propertyPath: m_Name
