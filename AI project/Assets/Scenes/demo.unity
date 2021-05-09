@@ -1954,9 +1954,9 @@ GameObject:
   - component: {fileID: 489900851}
   - component: {fileID: 489900853}
   - component: {fileID: 489900852}
-  - component: {fileID: 489900854}
   - component: {fileID: 489900855}
   - component: {fileID: 489900856}
+  - component: {fileID: 489900860}
   m_Layer: 0
   m_Name: player-idle-1
   m_TagString: Player
@@ -2022,7 +2022,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489900844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.29, y: -0.18, z: 0}
+  m_LocalPosition: {x: 180.45, y: -0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 808734241}
@@ -2116,6 +2116,7 @@ MonoBehaviour:
   Jumpforce: 14
   MoveMentSpeed: 8
   bulletPrefabs: {fileID: 1405665921}
+  bonus: {fileID: 489900860}
   Player_points: {fileID: 489900855}
   castDistnce: 4
   castDistnce1: 2
@@ -2190,22 +2191,6 @@ MonoBehaviour:
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
---- !u!58 &489900854
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489900844}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.85281813, y: -1.0162597}
-  serializedVersion: 2
-  m_Radius: 0.5569464
 --- !u!114 &489900855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2234,6 +2219,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGameLevel: {fileID: 784187919}
+--- !u!114 &489900860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489900844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124038ba64507ba45920c7ea094d787d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScorebonusPoints: 0
 --- !u!1001 &493879245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11534,6 +11532,7 @@ MonoBehaviour:
   agrorange: 8
   movespeed: 5
   Bullet: {fileID: 1405665922}
+  AddMorePoints: {fileID: 0}
   animator: {fileID: 0}
   health: 3
 --- !u!95 &1584227869
@@ -13239,7 +13238,7 @@ GameObject:
   - component: {fileID: 2033121020}
   m_Layer: 0
   m_Name: end
-  m_TagString: end
+  m_TagString: end1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13318,7 +13317,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.19363326, y: 0.15340757}

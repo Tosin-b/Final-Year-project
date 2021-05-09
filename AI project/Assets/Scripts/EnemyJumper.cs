@@ -6,6 +6,9 @@ public class EnemyJumper : MonoBehaviour
 {
 
     [SerializeField]
+    Scorebonus AddMorePoints;
+
+    [SerializeField]
     Transform player;
 
     [SerializeField]
@@ -29,6 +32,7 @@ public class EnemyJumper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AddMorePoints = FindObjectOfType<Scorebonus>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         matwhite = Resources.Load("WhiteFlash", typeof(Material)) as Material;
@@ -116,7 +120,17 @@ public class EnemyJumper : MonoBehaviour
         scoreManager.instance.Addscore();
 
     }
+    public void CheckForNewLevel()
+    {
+        if (levelUp.levelIncrement > 1)
+        {
+            if (levelUp.levelIncrement > levelUp.prevoiusLevelConverter)
+            {
+                AddMorePoints.GiveEnenyMorePoints();
+            }
+        }
+    }
 
 
-   
+
 }

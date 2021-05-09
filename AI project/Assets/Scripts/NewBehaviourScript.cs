@@ -18,6 +18,9 @@ public class NewBehaviourScript : Agent
 
     // [SerializeField]
     //Transform enemy;
+    
+    [SerializeField]
+    Scorebonus bonus;
 
     //[SerializeField]
     //GameObject checkingEnemyTag;
@@ -81,6 +84,10 @@ public class NewBehaviourScript : Agent
 
     private void Start()
     {
+       
+        bonus = FindObjectOfType<Scorebonus>();
+
+        
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         Player_points = FindObjectOfType<scoreManager>();
@@ -88,12 +95,16 @@ public class NewBehaviourScript : Agent
     
     public override void OnEpisodeBegin()
     {
-        //Debug.Log(endgame);
+        Debug.Log(endgame);
         if (endgame)
+
         {
+            Debug.Log("endgame has ben entered");
             endgame = false;
             respawn.Startagain();
             level.LevelingUp();
+
+
             Debug.Log(levelModifierScript.moveSpeedModifier + " moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + " enemyDamageModifier");
             
@@ -104,6 +115,7 @@ public class NewBehaviourScript : Agent
             respawn.again();
             levelModifierScript.DecreaseModifier();
             level.LevelDecrement();
+            bonus.resetPoints();
             Debug.Log(levelModifierScript.moveSpeedModifier + " moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + " enemyDamageModifier");
             
@@ -116,6 +128,7 @@ public class NewBehaviourScript : Agent
             respawn.again();
             levelModifierScript.DecreaseModifier();
             level.LevelDecrement();
+            bonus.resetPoints();
             Debug.Log(levelModifierScript.moveSpeedModifier + "moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + "enemyDamageModifier");
             
@@ -127,6 +140,7 @@ public class NewBehaviourScript : Agent
             respawn.again();
             levelModifierScript.DecreaseModifier();
             level.LevelDecrement();
+            bonus.resetPoints();
             Debug.Log(levelModifierScript.moveSpeedModifier + "moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + "enemyDamageModifier");
          
@@ -156,6 +170,7 @@ public class NewBehaviourScript : Agent
     {
         //Debug.Log(transform.position.x);
         currentPosition = transform.position;
+        //Debug.Log(endgame);
         // Debug.Log("Current position: " + currentPosition);
         // Debug.Log("Previous Position: " + previousPosition);
 
@@ -514,22 +529,22 @@ public class NewBehaviourScript : Agent
     {
         if(collision.gameObject.CompareTag("wallReward"))
         {
-           // Debug.Log("you hit the reward"); 
+            Debug.Log("you hit the reward"); 
             AddReward(0.001f);
         }
         //this part works reminder to delte the other function playerrhitwall
         else if (collision.gameObject.CompareTag("start"))
         {
-          //  Debug.Log("coooooooooooooooool");
+           Debug.Log("coooooooooooooooool");
             wall = true;
-          //  Debug.Log(wall);
+            Debug.Log(wall);
             AddReward(-0.001f);
             EndEpisode();
         }
-        else if(collision.gameObject.CompareTag("end"))
+        else if(collision.gameObject.CompareTag("end1"))
         {
             AddReward(0.1f);
-            //Debug.Log("i have fineshed the game");
+            Debug.Log("i have fineshed the game");
             endgame = true;
             if(Player_health >= 5)
             {
@@ -540,6 +555,7 @@ public class NewBehaviourScript : Agent
                 AddReward(-0.03f);
             }
             EndEpisode();
+
         }
     }
 

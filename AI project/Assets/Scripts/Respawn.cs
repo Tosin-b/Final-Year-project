@@ -39,6 +39,7 @@ public class Respawn : MonoBehaviour
     }
     public void Startagain()
     {
+        Debug.Log("i am in the Start again function");
         SceneManager.LoadScene(respawn);
         levelModifierScript.IncreaseModifier();
 

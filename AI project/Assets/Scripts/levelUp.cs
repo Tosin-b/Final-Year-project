@@ -6,6 +6,7 @@ public class levelUp : MonoBehaviour
 {
     public  Text currentGameLevel;
     public static int levelIncrement = 1;
+    public static int prevoiusLevelConverter = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,8 @@ public class levelUp : MonoBehaviour
         //currentScoreText.text = "POINTS: " + score.ToString();
         currentGameLevel.text = "LEVEL: " + levelIncrement.ToString();
         levelIncrement += 1;
+        prevoiusLevelConverter += 1;
+        Debug.Log("Current Level: " + levelIncrement + "Prevoius leverl Counter: " + prevoiusLevelConverter);
     }
     public  void LevelDecrement()
     {

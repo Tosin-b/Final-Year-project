@@ -5,6 +5,9 @@ using UnityEngine;
 public class Octupus : MonoBehaviour
 {
     [SerializeField]
+    Scorebonus AddMorePoints;
+
+    [SerializeField]
     Transform player;
 
     [SerializeField]
@@ -30,6 +33,7 @@ public class Octupus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AddMorePoints = FindObjectOfType<Scorebonus>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -118,7 +122,16 @@ public class Octupus : MonoBehaviour
 
     }
 
+    public void CheckForNewLevel()
+    {
+        if (levelUp.levelIncrement > 1)
+        {
+            if (levelUp.levelIncrement > levelUp.prevoiusLevelConverter)
+            {
+                AddMorePoints.GiveEnenyMorePoints();
+            }
+        }
+    }
 
-    
 
 }

@@ -17,6 +17,8 @@ public class EnenyScript : MonoBehaviour
     [SerializeField]
     Transform Bullet;
 
+    [SerializeField]
+    Scorebonus AddMorePoints;
     
     public Animator animator;
 
@@ -34,6 +36,7 @@ public class EnenyScript : MonoBehaviour
     void Start()
 
     {
+        AddMorePoints = FindObjectOfType<Scorebonus>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -131,6 +134,15 @@ public class EnenyScript : MonoBehaviour
             animator.SetFloat("run-crab", transform.position.x);
     }
 
-   
+    public void CheckForNewLevel()
+    {
+        if(levelUp.levelIncrement > 1)
+        {
+            if(levelUp.levelIncrement > levelUp.prevoiusLevelConverter)
+            {
+                AddMorePoints.GiveEnenyMorePoints();
+            }
+        }
+    }
 
 }

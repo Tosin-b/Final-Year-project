@@ -15,6 +15,7 @@ TagManager:
   - test
   - start
   - end
+  - end1
   layers:
   - Default
   - TransparentFX

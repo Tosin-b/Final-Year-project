@@ -14,6 +14,10 @@ public class Scorebonus : MonoBehaviour
     {
         ScorebonusPoints += 5;
     }
+    public void resetPoints()
+    {
+        ScorebonusPoints = 0;
+    }
 
   
 }
