@@ -6,18 +6,14 @@ using UnityEngine.UI;
 
 public class scoreManager : MonoBehaviour
 {
-    public static scoreManager instance;
+   
 
     
-
-    public Text currentScoreText;
-    public Text HighScoreText;
+   public Text currentScoreText;
+   public Text HighScoreText;
    public int score;
    public int highScore = 0;
-    private void Awake()
-    {
-        instance = this;
-    }
+    
     // Start is called before the first frame update
     void Start()
     {

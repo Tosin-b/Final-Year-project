@@ -19,6 +19,9 @@ public class Octupus : MonoBehaviour
     [SerializeField]
     Transform Bullet;
 
+    [SerializeField]
+    scoreManager scoreManager;
+
 
     public Animator animator;
 
@@ -34,6 +37,7 @@ public class Octupus : MonoBehaviour
     void Start()
     {
         AddMorePoints = FindObjectOfType<Scorebonus>();
+        scoreManager = FindObjectOfType<scoreManager>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -118,7 +122,7 @@ public class Octupus : MonoBehaviour
         GameObject explosionn = (GameObject)Instantiate(explosionref);
         explosionn.transform.position = new Vector3(transform.position.x, transform.position.y + .3f, transform.position.z);
         Destroy(gameObject);
-        scoreManager.instance.Addscore();
+        scoreManager.Addscore();
 
     }
 

@@ -6,7 +6,7 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
 
-public class NewBehaviourScript : Agent
+public class Player : Agent
 {
 
     public float Jumpforce = 1;
@@ -169,7 +169,7 @@ public class NewBehaviourScript : Agent
     }
     public void Update()
     {
-        Debug.Log("sore player script: " + Player_points.score);
+        //Debug.Log("sore player script: " + Player_points.score);
         //Debug.Log(transform.position.x);
         currentPosition = transform.position;
         //Debug.Log(endgame);
@@ -204,7 +204,6 @@ public class NewBehaviourScript : Agent
 
         controlSignal.x = vectorAction[0];
         controlSignal.y = vectorAction[1];
-        pointAquired();
         bulletDirection();
         GroundcheckLeft();
         Groundcheck();
@@ -498,15 +497,7 @@ public class NewBehaviourScript : Agent
         b.GetComponent<Bullet>().StartShoot(isFacingLeft);
         b.transform.position = bulletSpawnpos.transform.position;
     }
-    public void pointAquired()
-    {
-        if(Player_points.score >=10)
-        {
-            Debug.Log("Well done u hit all the points");
-            AddReward(1.0f);
-        }
-    }
-
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Procces(collision.gameObject);
@@ -553,20 +544,28 @@ public class NewBehaviourScript : Agent
         }
         else if(collision.gameObject.CompareTag("end1"))
         {
-            AddReward(1.0f);
+
+            AddReward(0.8f);
             Debug.Log("i have fineshed the game");
             endgame = true;
-            if(Player_health >= 10)
+            if(Player_health >= 11)
             {
-                AddReward(0.01f);
+                Debug.Log("you are really good at this");
+                AddReward(0.5f);
             }
             else
             {
                 AddReward(-0.03f);
             }
+            if(Player_points.score >= 130)
+            {
+                Debug.Log("you have ht the max points");
+                AddReward(0.5f);
+            }
             EndEpisode();
 
         }
+       
     }
 
 

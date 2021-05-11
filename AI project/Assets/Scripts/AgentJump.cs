@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AgentJump : MonoBehaviour
 {
-    NewBehaviourScript player;
+    Player player;
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<NewBehaviourScript>();
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame

@@ -21,6 +21,8 @@ public class EnenyScript : MonoBehaviour
     Scorebonus AddMorePoints;
     
     public Animator animator;
+    [SerializeField]
+    scoreManager scoreManager;
 
     Rigidbody2D rb;
 
@@ -36,6 +38,7 @@ public class EnenyScript : MonoBehaviour
     void Start()
 
     {
+        scoreManager = FindObjectOfType<scoreManager>();
         AddMorePoints = FindObjectOfType<Scorebonus>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -121,7 +124,7 @@ public class EnenyScript : MonoBehaviour
         GameObject explosionn = (GameObject)Instantiate(explosionref);
         explosionn.transform.position = new Vector3(transform.position.x, transform.position.y + .3f, transform.position.z);
         Destroy(gameObject);
-        scoreManager.instance.Addscore();
+        scoreManager.Addscore();
 
     }
 

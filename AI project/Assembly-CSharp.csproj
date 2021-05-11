@@ -71,8 +71,8 @@
     <Compile Include="Assets\Scripts\EnenyAgent.cs" />
     <Compile Include="Assets\Scripts\EnenyScript.cs" />
     <Compile Include="Assets\Scripts\Heathbar.cs" />
-    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Octupus.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Respawn.cs" />
     <Compile Include="Assets\Scripts\Scorebonus.cs" />
     <Compile Include="Assets\Scripts\invis.cs" />

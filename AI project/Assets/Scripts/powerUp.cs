@@ -6,14 +6,14 @@ using UnityEngine;
 public class powerUp : MonoBehaviour
 {
     private Rigidbody2D rb;
-    NewBehaviourScript player;
+    Player player;
     public float newhealth;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = FindObjectOfType<NewBehaviourScript>();
+        player = FindObjectOfType<Player>();
         
         
     }

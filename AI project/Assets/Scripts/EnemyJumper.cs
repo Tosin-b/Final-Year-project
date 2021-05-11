@@ -20,6 +20,9 @@ public class EnemyJumper : MonoBehaviour
     [SerializeField]
     Transform Bullet;
 
+    [SerializeField]
+    scoreManager scoreManager;
+
     Rigidbody2D rb;
 
     [SerializeField]
@@ -32,6 +35,7 @@ public class EnemyJumper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        scoreManager = FindObjectOfType<scoreManager>();
         AddMorePoints = FindObjectOfType<Scorebonus>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -117,8 +121,7 @@ public class EnemyJumper : MonoBehaviour
         GameObject explosionn = (GameObject)Instantiate(explosionref);
         explosionn.transform.position = new Vector3(transform.position.x, transform.position.y + .3f, transform.position.z);
         Destroy(gameObject);
-        scoreManager.instance.Addscore();
-
+        scoreManager.Addscore();
     }
     public void CheckForNewLevel()
     {

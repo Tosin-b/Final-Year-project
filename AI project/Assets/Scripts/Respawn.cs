@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class Respawn : MonoBehaviour
 {
     public int respawn;
-    NewBehaviourScript health;
+    Player health;
     // Start is called before the first frame update
     void Start()
     {
-        health = FindObjectOfType<NewBehaviourScript>();
+        health = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame

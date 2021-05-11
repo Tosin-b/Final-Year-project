@@ -9,12 +9,12 @@ public class Heathbar : MonoBehaviour
     private Image Healthbar;
     public float currentHealth=10f;
     private float MaxHealth = 14;
-    NewBehaviourScript Player;
+    Player Player;
 
     private void Start()
     {
         Healthbar = GetComponent<Image>();
-        Player = FindObjectOfType<NewBehaviourScript>();
+        Player = FindObjectOfType<Player>();
     }
     private void Update()
     {
