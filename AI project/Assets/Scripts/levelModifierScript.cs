@@ -16,8 +16,8 @@ public class levelModifierScript : MonoBehaviour
     {
         moveSpeedModifier += 1;
         enemyDamageModifier += 1;
-        Debug.Log("moveSpeedModifier: " + moveSpeedModifier);
-        Debug.Log("enemyDamageModifier: " + enemyDamageModifier);
+       // Debug.Log("moveSpeedModifier: " + moveSpeedModifier);
+      //  Debug.Log("enemyDamageModifier: " + enemyDamageModifier);
 
     }
     public static void DecreaseModifier()

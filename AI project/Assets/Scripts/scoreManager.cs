@@ -12,8 +12,8 @@ public class scoreManager : MonoBehaviour
 
     public Text currentScoreText;
     public Text HighScoreText;
-   public int score = 0;
-    int highScore = 0;
+   public int score;
+   public int highScore = 0;
     private void Awake()
     {
         instance = this;
@@ -30,7 +30,7 @@ public class scoreManager : MonoBehaviour
     // Update is called once per frame
     public void Addscore()
     {
-        score += 10  ;
+        score += 10;
         Debug.Log("score new"+score);
         currentScoreText.text =   "POINTS: " + score.ToString();
         if(highScore < score)

@@ -99,6 +99,7 @@ public class NewBehaviourScript : Agent
         if (endgame)
 
         {
+            
             Debug.Log("endgame has ben entered");
             endgame = false;
             respawn.Startagain();
@@ -115,7 +116,7 @@ public class NewBehaviourScript : Agent
             respawn.again();
             levelModifierScript.DecreaseModifier();
             level.LevelDecrement();
-            bonus.resetPoints();
+            //bonus.resetPoints();
             Debug.Log(levelModifierScript.moveSpeedModifier + " moveSpeedModifier");
             Debug.Log(levelModifierScript.enemyDamageModifier + " enemyDamageModifier");
             
@@ -168,6 +169,7 @@ public class NewBehaviourScript : Agent
     }
     public void Update()
     {
+        Debug.Log("sore player script: " + Player_points.score);
         //Debug.Log(transform.position.x);
         currentPosition = transform.position;
         //Debug.Log(endgame);
@@ -202,7 +204,7 @@ public class NewBehaviourScript : Agent
 
         controlSignal.x = vectorAction[0];
         controlSignal.y = vectorAction[1];
-
+        pointAquired();
         bulletDirection();
         GroundcheckLeft();
         Groundcheck();
@@ -426,7 +428,7 @@ public class NewBehaviourScript : Agent
     {
         if (this.transform.position.y < -8)
         {
-            AddReward(-0.01f);
+            AddReward(-0.5f);
             EndEpisode();
         }
 
@@ -483,7 +485,7 @@ public class NewBehaviourScript : Agent
     {
         if (Player_health <= 0)
         {
-            AddReward(-0.01f);
+            AddReward(-0.5f);
             EndEpisode();
         }
     }
@@ -495,6 +497,14 @@ public class NewBehaviourScript : Agent
         GameObject b = Instantiate(bulletPrefabs); 
         b.GetComponent<Bullet>().StartShoot(isFacingLeft);
         b.transform.position = bulletSpawnpos.transform.position;
+    }
+    public void pointAquired()
+    {
+        if(Player_points.score >=10)
+        {
+            Debug.Log("Well done u hit all the points");
+            AddReward(1.0f);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -519,7 +529,7 @@ public class NewBehaviourScript : Agent
             Player_health = Player_health - hurt- levelModifierScript.enemyDamageModifier;
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
             //animator.Play("hurt");
-            AddReward(-0.002f);
+            AddReward(-0.02f);
            
 
         }
@@ -543,10 +553,10 @@ public class NewBehaviourScript : Agent
         }
         else if(collision.gameObject.CompareTag("end1"))
         {
-            AddReward(0.1f);
+            AddReward(1.0f);
             Debug.Log("i have fineshed the game");
             endgame = true;
-            if(Player_health >= 5)
+            if(Player_health >= 10)
             {
                 AddReward(0.01f);
             }
