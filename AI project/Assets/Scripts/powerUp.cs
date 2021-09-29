@@ -31,7 +31,7 @@ public class powerUp : MonoBehaviour
 
     private void Damage()
     {
-        player.Player_health = player.Player_health + 1;
+        player.Player_health = player.Player_health + 1 +levelModifierScript.healthBoost;
        
         
     }

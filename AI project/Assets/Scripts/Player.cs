@@ -179,7 +179,7 @@ public class Player : Agent
         if (currentPosition.x > previousPosition.x)
         {
            // Debug.Log("Well done you are progressing  :)" + "CurrentPosition: " + currentPosition + "previousPosition: " + previousPosition);
-            AddReward(0.0001f);
+            AddReward(0.003f);
         }
         else if (currentPosition.x < previousPosition.x)
         {
@@ -214,8 +214,7 @@ public class Player : Agent
         healthReset();
         jumpingleft();
         jumpRigth();
-        //isJumping();
-        //Debug.Log(" controlSignal.y = " + controlSignal.y);
+        
 
         if(vectorAction[1] == 1 && Mathf.Abs(rigidbody.velocity.y) < 0.001f)
         {
@@ -427,7 +426,7 @@ public class Player : Agent
     {
         if (this.transform.position.y < -8)
         {
-            AddReward(-0.5f);
+            AddReward(-0.8f);
             EndEpisode();
         }
 
@@ -448,7 +447,7 @@ public class Player : Agent
                 shootingTime = Time.time;
                 shootBullet();
                 //Shooting Right
-                AddReward(0.012f);
+                AddReward(0.4f);
             }
             
         }
@@ -471,7 +470,7 @@ public class Player : Agent
                 shootBullet();
                 //sets a reward
                 //Shooting Right
-                AddReward(0.012f);
+                AddReward(0.4f);
             }
 
         }
@@ -484,7 +483,7 @@ public class Player : Agent
     {
         if (Player_health <= 0)
         {
-            AddReward(-0.5f);
+            AddReward(-1.0f);
             EndEpisode();
         }
     }
@@ -504,7 +503,7 @@ public class Player : Agent
         if (collision.gameObject.CompareTag("Obstacle"))
         {
            // Debug.Log("oof you hit the head");
-            AddReward(-0.0002f);
+            AddReward(-0.00002f);
            
             //respawn.Startagain();
         }
@@ -518,9 +517,9 @@ public class Player : Agent
 
             float hurt = 2f;
             Player_health = Player_health - hurt- levelModifierScript.enemyDamageModifier;
+            AddReward(-0.3f);
             rigidbody.AddForce(new Vector2(-12f, 0), ForceMode2D.Impulse);
-            //animator.Play("hurt");
-            AddReward(-0.02f);
+            
            
 
         }
@@ -531,7 +530,7 @@ public class Player : Agent
         if(collision.gameObject.CompareTag("wallReward"))
         {
             Debug.Log("you hit the reward"); 
-            AddReward(0.001f);
+            AddReward(0.07f);
         }
         //this part works reminder to delte the other function playerrhitwall
         else if (collision.gameObject.CompareTag("start"))
@@ -539,19 +538,19 @@ public class Player : Agent
            Debug.Log("coooooooooooooooool");
             wall = true;
             Debug.Log(wall);
-            AddReward(-0.001f);
+            AddReward(-0.5f);
             EndEpisode();
         }
         else if(collision.gameObject.CompareTag("end1"))
         {
 
-            AddReward(0.8f);
+            AddReward(1.0f);
             Debug.Log("i have fineshed the game");
             endgame = true;
             if(Player_health >= 11)
             {
                 Debug.Log("you are really good at this");
-                AddReward(0.5f);
+                AddReward(0.9f);
             }
             else
             {
@@ -560,7 +559,7 @@ public class Player : Agent
             if(Player_points.score >= 130)
             {
                 Debug.Log("you have ht the max points");
-                AddReward(0.5f);
+                AddReward(1.0f);
             }
             EndEpisode();
 
