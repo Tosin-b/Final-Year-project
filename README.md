@@ -12,3 +12,4 @@ The essential skills I would like to gain when completing my project are to be a
 The approach of my project was to train my player to play the game and go up every level. He would also try to aim to hit the highest score at each level. I then set a schedule for myself. If I finished my project a month earlier, I would implement reinforcement-learning to my players to learn from them and perform different activities to prevent themselves from dying.
 Unfortunately, due to time restraints, I was unable to complete the model.
 This project is mainly focused on machine learning since I have no prior experience with it. To train my player, I used an open-source tool kit named ML-agents.
+![images](https://github.com/user-attachments/assets/8d2690b6-b045-4d8d-8758-edf3e70ff051)
